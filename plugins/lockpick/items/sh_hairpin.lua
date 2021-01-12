@@ -2,7 +2,7 @@
 -- the code organization has gone awol
 ITEM.name = "Hairpin"
 ITEM.description = "itemHairpinDesc"
-ITEM.price = 20
+ITEM.price = 1
 ITEM.model = "models/props_lab/box01a.mdl"
 ITEM.functions.Use = {
 	OnRun = function(itemTable)
