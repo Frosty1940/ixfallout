@@ -79,6 +79,14 @@ PLUGIN.items.common = {
 	"steak_irradiated",
 	"sugarbombs_irradiated",
 	"yumyumdeviledeggs_irradiated",
+	"steel",
+	"wood",
+	"cloth",
+	"leather",
+	"aluminium",
+	"gunpowder",
+	"acid",
+	"ballisticfiber",
 }
 
 PLUGIN.items.rare = {

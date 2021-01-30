@@ -1,6 +1,6 @@
 
 RECIPE.name = "Human steak"
-RECIPE.description = "Cook a Human steak."
+RECIPE.description = "recipeHumanSteakDesc"
 RECIPE.category = "Food"
 RECIPE.model = "models/mosi/fallout4/props/food/humanmeat.mdl"
 RECIPE.requirements = {

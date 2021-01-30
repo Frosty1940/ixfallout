@@ -1,13 +1,14 @@
 
-RECIPE.name = "Water"
+RECIPE.name = "Boiled water"
 RECIPE.description = "recipeWaterDesc"
 RECIPE.category = "Food"
-RECIPE.model = "models/mosi/fallout4/props/drink/water.mdl"
+RECIPE.model = "models/mosi/fallout4/props/drink/dirtywater.mdl"
 RECIPE.requirements = {
-	["dirtywater"] = 3
+	["dirtywater"] = 1,
+	["wood"] = 1
 }
 RECIPE.results = {
-	["water"] = {["min"] = 1, ["max"] = 3}
+	["boiledwater"] = 1
 }
 
 RECIPE:PostHook("OnCanCraft", function(recipeTable, client)

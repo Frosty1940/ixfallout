@@ -1,6 +1,6 @@
 
 RECIPE.name = "Dog steak"
-RECIPE.description = "Cook a Dog steak."
+RECIPE.description = "recipeDogSteakDesc"
 RECIPE.category = "Food"
 RECIPE.model = "models/mosi/fallout4/props/food/dogmeat.mdl"
 RECIPE.requirements = {

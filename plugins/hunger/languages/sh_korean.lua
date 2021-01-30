@@ -157,4 +157,6 @@ LANGUAGE = {
 	itemYumYumDeviledEggsDesc = "전쟁 전 얌얌 사에서 만든 달걀 즉석 요리입니다.",
 	["Irr. YumYum D. Eggs"] = "오염된 얌얌 데블드 에그",
 	itemIrrYumYumDEggsDesc = "전쟁 전 얌얌 사에서 만든 달걀 즉석 요리입니다.\n방사능에 오염되어 있습니다.",
+	["Boiled water"] = "끓인 물",
+	itemBoiledWaterDesc = "더러운 물을 끓여 그나마 마실만 하게 만들었습니다.",
 }

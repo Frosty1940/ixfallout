@@ -1,6 +1,6 @@
 
 RECIPE.name = "Electron charge pack"
-RECIPE.description = "recipeElectronChargePackDesc"
+RECIPE.description = "recipeElectronChargePackDesc2"
 RECIPE.category = "Ammunition"
 RECIPE.model = "models/maxibammo/electronchargepack.mdl"
 RECIPE.requirements = {

@@ -101,6 +101,14 @@ if SERVER then
 ---------------------------------------------------------------------------]]
 	PLUGIN.customitems = {
 		["metal"] = 70,
+		["wood"] = 70,
+		["steel"] = 70,
+		["gunpowder"] = 60,
+		["acid"] = 60,
+		["cloth"] = 70,
+		["aluminium"] = 60,
+		["leather"] = 60,
+		["ballisticfiber"] = 30,
 		["wonderglue"] = 55,
 		["fissionbattery"] = 55,
 		["sensormodule"] = 55,

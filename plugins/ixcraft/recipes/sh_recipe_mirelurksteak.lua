@@ -1,6 +1,6 @@
 
 RECIPE.name = "Roasted mirelurk meat"
-RECIPE.description = "recipeWaterDesc"
+RECIPE.description = "recipeMirelurkSteakDesc"
 RECIPE.category = "Food"
 RECIPE.model = "models/mosi/fallout4/props/food/mirelurkroast.mdl"
 RECIPE.requirements = {

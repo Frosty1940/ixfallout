@@ -1,6 +1,6 @@
 
 RECIPE.name = "Dealthclaw steak"
-RECIPE.description = "recipeDeathclawSteak"
+RECIPE.description = "recipeDeathclawSteakDesc"
 RECIPE.category = "Food"
 RECIPE.model = "models/mosi/fallout4/props/food/deathclawmeat.mdl"
 RECIPE.requirements = {

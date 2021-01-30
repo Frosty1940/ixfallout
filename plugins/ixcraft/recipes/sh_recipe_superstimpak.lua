@@ -1,6 +1,6 @@
 
 RECIPE.name = "Super stimpak"
-RECIPE.description = "Make a super stimpak."
+RECIPE.description = "recipeSuperStimpakDesc"
 RECIPE.category = "Medical"
 RECIPE.model = "models/fallout_4/props/superstimpak.mdl"
 RECIPE.requirements = {

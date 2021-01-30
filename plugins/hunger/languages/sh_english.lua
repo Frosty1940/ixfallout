@@ -77,4 +77,5 @@ LANGUAGE = {
 	itemWaterDesc = 'It is water that has been purged of any radiation, making it one of the only "clean" sources of water in the wasteland.',
 	itemYumYumDeviledEggsDesc = "The only known product of YumYum, a pre-War food production company. They come in a blue and red package.",
 	itemIrrYumYumDEggsDesc = "The only known product of YumYum, a pre-War food production company. They come in a blue and red package.\nThis has been exposed to the high levels of radiation.",
+	itemBoiledWaterDesc = "It is the most common water in the wasteland.\nBut boiled enought to drink at least not irradiated hard.",
 }
