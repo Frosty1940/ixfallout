@@ -31,3 +31,11 @@ ITEM.attribBoosts = {
 	["str"] = 2,
 	["stm"] = -2,
 }
+
+ITEM:Hook("Equip", function(item)
+	item.player:SetModelScale(1.1, 0)
+end)
+
+ITEM:Hook("EquipUn", function(item)
+	item.player:SetModelScale(1, 0)
+end)

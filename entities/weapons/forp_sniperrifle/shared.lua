@@ -1,3 +1,8 @@
+if (CLIENT) then
+	SWEP.PrintName = L("Sniper rifle") -- Weapon name (Shown on HUD)
+	SWEP.Instructions = L("itemSniperRifleDesc") --Instructions Tooltip
+end
+
 SWEP.AmmoTypeStrings = {
 	SniperRound_ammo = ".308 Rounds"
 }
@@ -8,12 +13,12 @@ SWEP.Manufacturer = "Illusion" --Gun Manufactrer (e.g. Hoeckler and Koch )
 SWEP.Author				= "Illusion" --Author Tooltip
 SWEP.Contact				= "https://steamcommunity.com/id/cheatingithinknot/" --Contact Info Tooltip
 SWEP.Purpose				= "" --Purpose Tooltip
-SWEP.Instructions				= L("itemSniperRifleDesc") --Instructions Tooltip
+
 SWEP.Spawnable				= true --Can you, as a normal user, spawn this?
 SWEP.AdminSpawnable			= true --Can an adminstrator spawn this?  Does not tie into your admin mod necessarily, unless its coded to allow for GMod's default ranks somewhere in its code.  Evolve and ULX should work, but try to use weapon restriction rather than these.
 SWEP.DrawCrosshair			= true		-- Draw the crosshair?
 SWEP.DrawCrosshairIS = false --Draw the crosshair in ironsights?
-SWEP.PrintName				= L("Sniper rifle")		-- Weapon name (Shown on HUD)
+
 SWEP.Slot				= 2			-- Slot in the weapon selection menu.  Subtract 1, as this starts at 0.
 SWEP.SlotPos				= 73			-- Position in the slot
 SWEP.AutoSwitchTo			= true		-- Auto switch to if we pick it up

@@ -5,39 +5,41 @@ PLUGIN.desc = "An NPC spawning system."
 PLUGIN.spawnpoints = PLUGIN.spawnpoints or {}
 
 ix.lang.AddTable("english", {
-	itemspawner = "NPC Spawner",
+	npcspawner = "NPC Spawner",
 })
 
 ix.lang.AddTable("korean", {
-	itemspawner = "NPC 스포너",
+	npcspawner = "NPC 스포너",
 })
 
 ix.config.Add("spawner_enabled", true, "Whether NPC spawners are on or not.", nil, {
-	category = "NPC Spawner"
+	category = "npcspawner"
 })
 
 ix.config.Add("npc_spawnrate", 90, "How often an npc will be spawned at an npc spawn point.", nil, {
 	data = {min = 1, max = 84600},
-	category = "NPC Spawner"
+	category = "npcspawner"
 })
 
 PLUGIN.spawngroups = {
 	["default"] = {
-		"Feral Ghoul",
+		"npc_ghoulferal",
 	},
 	["feral_dog"] = {
 		"vj_fallout_dog",
 	},
 	["feral_ghoul"] = {
-		"Feral Ghoul",
+		"npc_ghoulferal",
 	},
-	["feral_goul_elite"] = {
-		"Feral Ghoul",
-		"Feral Ghoul Reaver",
-		"Feral Ghoul Roamer",
-		"Glowing One",
-		--"Feral Trooper Ghoul",
-		--"Glowing Feral Trooper Ghoul",
+	["feral_ghoul_elite"] = {
+		"npc_ghoulferal",
+		"npc_ghoulferal",
+		"npc_ghoulferal",
+		--"npc_ghoulferal_reaver",
+		"npc_ghoulferal_roamer",
+		"npc_ghoulferal_glowingone",
+		--"npc_ghoulferal_trooper",
+		--"npc_ghoulferal_trooper_gl",
 	},
 	["radroach"] = {
 		"vj_fallout_roach",
@@ -58,11 +60,17 @@ PLUGIN.spawngroups = {
 		"vj_fallout_bloatfly",
 	},
 	["deathclaw"] = {
-		"Deathclaw",
+		"npc_deathclaw",
+	},
+	["enclave"] = {
+		"npc_mrgutsy_enclave",
+	},
+	["army"] = {
+		"npc_mrgutsy_army",
 	}
 }
 
-PLUGIN.maxnpcs = 40
+PLUGIN.maxnpcs = 150
 PLUGIN.spawnedNPCs = PLUGIN.spawnedNPCs or {}
 
 if SERVER then

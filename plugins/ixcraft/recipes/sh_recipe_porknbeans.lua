@@ -4,10 +4,10 @@ RECIPE.description = "recipePorkNBeansDesc"
 RECIPE.category = "Food"
 RECIPE.model = "models/mosi/fallout4/props/food/porknbeans.mdl"
 RECIPE.requirements = {
-	["porknbeans_irradiated"] = 2
+	["porkbeans_irradiated"] = 2
 }
 RECIPE.results = {
-	["porknbeans"] = {["min"] = 1, ["max"] = 2}
+	["porkbeans"] = {["min"] = 1, ["max"] = 2}
 }
 
 RECIPE:PostHook("OnCanCraft", function(recipeTable, client)

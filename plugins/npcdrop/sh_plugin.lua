@@ -92,20 +92,22 @@ function PLUGIN:OnNPCKilled(entity, client)
 		ix.item.Spawn(NukaColaItems, entity:GetPos() + Vector(0, 0, 16))
 	elseif (class == "npc_deathclaw_baby") then
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
-	elseif (class == "npc_deathclaw" or class == "npc_deathclaw_alphamale" or class == "vj_fallout_deathclaw" or class == "Deathclaw") then
+	elseif (class == "npc_deathclaw" or class == "npc_deathclaw_alphamale" or class == "vj_fallout_deathclaw" or class == "npc_eathclaw") then
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
 	elseif (class == "npc_deathclaw_mother") then
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
 		ix.item.Spawn("deathclawegg", entity:GetPos() + Vector(0, 0, 16))
-	elseif (class == "npc_ghoulferal" or class == "npc_ghoulferal_jumpsuit" or class == "npc_ghoulferal_reaver" or class == "npc_ghoulferal_roamer" or class == "npc_ghoulferal_trooper" or class == "npc_ghoulferal_trooper_gl" or class == "npc_ghoulferal_glowingone" or class == "npc_ghoulferal_jumpsuit_gl" or class == "vj_fallout_ghoul" or class == "Feral Ghoul" or class == "Feral Ghoul Reaver" or class == "Feral Ghoul Roamer" or class == "Feral Trooper Ghoul" or class == "Glowing One" or class == "Glowing Feral Trooper Ghoul") then
+	elseif (class == "npc_ghoulferal" or class == "npc_ghoulferal_jumpsuit" or class == "npc_ghoulferal_reaver" or class == "npc_ghoulferal_roamer" or class == "npc_ghoulferal_trooper" or class == "npc_ghoulferal_trooper_gl" or class == "npc_ghoulferal_glowingone" or class == "npc_ghoulferal_jumpsuit_gl" or class == "vj_fallout_ghoul") then
 		if (rnd >= 99) then
 			ix.item.Spawn("metal_armor", entity:GetPos() + Vector(0, 0, 16))
-		elseif (rnd >= 30) then
+		elseif (rnd >= 60) then
+			ix.item.Spawn(GhoulItems, entity:GetPos() + Vector(0, 0, 16))
+		elseif (rnd >= 50) then
 			ix.item.Spawn(GhoulItems, entity:GetPos() + Vector(0, 0, 16))
 			ix.item.Spawn(IrradiatedPreWarFoodsItems, entity:GetPos() + Vector(0, 0, 16))
 		end
-	elseif (class == "npc_mrgutsy_army" or class == "Army Gutsy" or class == "Brotherhood Gutsy" or class == "Enclave Gutsy") then
+	elseif (class == "npc_mrgutsy_army" or class == "npc_mrgutsy_brotherhood" or class == "npc_mrgutsy_enclave") then
 		if (rnd >= 30) then
 			ix.item.Spawn(GutsyItems, entity:GetPos() + Vector(0, 0, 16))
 			ix.item.Spawn(GutsyItems, entity:GetPos() + Vector(0, 0, 16))
