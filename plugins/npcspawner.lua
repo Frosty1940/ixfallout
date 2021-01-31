@@ -23,13 +23,43 @@ ix.config.Add("npc_spawnrate", 90, "How often an npc will be spawned at an npc s
 
 PLUGIN.spawngroups = {
 	["default"] = {
-		"vj_mutant_dog",
-		"vj_mutant_flesh",
-		"vj_mutant_boar2"
+		"Feral Ghoul",
 	},
-	["human"] = {
-        "vj_mutant_bloodsucker"
-    },
+	["feral_dog"] = {
+		"vj_fallout_dog",
+	},
+	["feral_ghoul"] = {
+		"Feral Ghoul",
+	},
+	["feral_goul_elite"] = {
+		"Feral Ghoul",
+		"Feral Ghoul Reaver",
+		"Feral Ghoul Roamer",
+		"Glowing One",
+		--"Feral Trooper Ghoul",
+		--"Glowing Feral Trooper Ghoul",
+	},
+	["radroach"] = {
+		"vj_fallout_roach",
+	},
+	["radscorpion"] = {
+		"vj_fallout_scorps",
+	},
+	["molerat"] = {
+		"vj_fallout_molerat",
+	},
+	["yao_gui"] = {
+		"vj_fallout_yaoguai",
+	},
+	["mirelurk"] = {
+		"vj_fallout_mirelurks",
+	},
+	["bloatfly"] = {
+		"vj_fallout_bloatfly",
+	},
+	["deathclaw"] = {
+		"Deathclaw",
+	}
 }
 
 PLUGIN.maxnpcs = 40

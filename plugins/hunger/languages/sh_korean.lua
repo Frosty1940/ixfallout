@@ -159,4 +159,8 @@ LANGUAGE = {
 	itemIrrYumYumDEggsDesc = "전쟁 전 얌얌 사에서 만든 달걀 즉석 요리입니다.\n방사능에 오염되어 있습니다.",
 	["Boiled water"] = "끓인 물",
 	itemBoiledWaterDesc = "더러운 물을 끓여 그나마 마실만 하게 만들었습니다.",
+	["Yao gui meat"] = "야오과이 고기",
+	itemYaoGuiMeatDesc = "야오과이에서 잘라낸 조리하지 않은 고깃덩이입니다.",
+	["Yao guai ribs"] = "야오과이 갈비",
+	itemYaoGuiRibsDesc = "야오과이의 조리한 갈빗살입니다.",
 }

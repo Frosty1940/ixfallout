@@ -9,7 +9,7 @@ function PLUGIN:OnNPCKilled(entity, client)
 	local model = entity:GetModel()
 	local skin = entity:GetSkin()
 	
-	local Gecko = {"geckomeat"}
+	local Gecko = {"geckomeat", "leather"}
 	local GeckoItems = table.Random(Gecko)
 	
 	local Mirelurk = {"mirelurkmeat", "mirelurkegg"}
@@ -18,7 +18,7 @@ function PLUGIN:OnNPCKilled(entity, client)
 	local NukaCola = {"nukacola", "nukacola_quantom", "nukacola_quartz", "nukacola_victory", "nukacola_wild"}
 	local NukaColaItems = table.Random(NukaCola)
 	
-	local Deathclaw = {"deathclawmeat"}
+	local Deathclaw = {"deathclawmeat", "leather"}
 	local DeathclawItems = table.Random(Deathclaw)
 	
 	local Ghoul = {"humanmeat", "money"}
@@ -33,20 +33,23 @@ function PLUGIN:OnNPCKilled(entity, client)
 	local Radroach = {"radroachmeat"}
 	local RadroachItems = table.Random(Radroach)
 
-	local Dog = {"dogmeat"}
+	local Dog = {"dogmeat", "leather"}
 	local DogItems = table.Random(Dog)
 
 	local Bloatfly = {"bloatflymeat"}
 	local BloatflyItems = table.Random(Bloatfly)
 
-	local Brahmin = {"brahminmeat", "milk_carton"}
+	local Brahmin = {"brahminmeat", "milk_carton", "leather"}
 	local BrahminItems = table.Random(Brahmin)
 
-	local Molerat = {"moleratmeat"}
+	local Molerat = {"moleratmeat", "leather"}
 	local MoleratItems = table.Random(Molerat)
 
 	local Radscorpion = {"radscorpionmeat"}
 	local RadscorpionItems = table.Random(Radscorpion)
+
+	local YaoGui = {"yaoguimeat", "leather"}
+	local YaoGuiItems = table.Random(YaoGui)
 	
 	local rnd = math.random(1, 100)
 
@@ -89,20 +92,20 @@ function PLUGIN:OnNPCKilled(entity, client)
 		ix.item.Spawn(NukaColaItems, entity:GetPos() + Vector(0, 0, 16))
 	elseif (class == "npc_deathclaw_baby") then
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
-	elseif (class == "npc_deathclaw" or class == "npc_deathclaw_alphamale" or class == "vj_fallout_deathclaw") then
+	elseif (class == "npc_deathclaw" or class == "npc_deathclaw_alphamale" or class == "vj_fallout_deathclaw" or class == "Deathclaw") then
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
 	elseif (class == "npc_deathclaw_mother") then
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
 		ix.item.Spawn("deathclawegg", entity:GetPos() + Vector(0, 0, 16))
-	elseif (class == "npc_ghoulferal" or class == "npc_ghoulferal_jumpsuit" or class == "npc_ghoulferal_reaver" or class == "npc_ghoulferal_roamer" or class == "npc_ghoulferal_trooper" or class == "npc_ghoulferal_trooper_gl" or class == "npc_ghoulferal_glowingone" or class == "npc_ghoulferal_jumpsuit_gl" or class == "vj_fallout_ghoul") then
+	elseif (class == "npc_ghoulferal" or class == "npc_ghoulferal_jumpsuit" or class == "npc_ghoulferal_reaver" or class == "npc_ghoulferal_roamer" or class == "npc_ghoulferal_trooper" or class == "npc_ghoulferal_trooper_gl" or class == "npc_ghoulferal_glowingone" or class == "npc_ghoulferal_jumpsuit_gl" or class == "vj_fallout_ghoul" or class == "Feral Ghoul" or class == "Feral Ghoul Reaver" or class == "Feral Ghoul Roamer" or class == "Feral Trooper Ghoul" or class == "Glowing One" or class == "Glowing Feral Trooper Ghoul") then
 		if (rnd >= 99) then
 			ix.item.Spawn("metal_armor", entity:GetPos() + Vector(0, 0, 16))
 		elseif (rnd >= 30) then
 			ix.item.Spawn(GhoulItems, entity:GetPos() + Vector(0, 0, 16))
 			ix.item.Spawn(IrradiatedPreWarFoodsItems, entity:GetPos() + Vector(0, 0, 16))
 		end
-	elseif (class == "npc_mrgutsy_army") then
+	elseif (class == "npc_mrgutsy_army" or class == "Army Gutsy" or class == "Brotherhood Gutsy" or class == "Enclave Gutsy") then
 		if (rnd >= 30) then
 			ix.item.Spawn(GutsyItems, entity:GetPos() + Vector(0, 0, 16))
 			ix.item.Spawn(GutsyItems, entity:GetPos() + Vector(0, 0, 16))
@@ -131,6 +134,10 @@ function PLUGIN:OnNPCKilled(entity, client)
 	elseif (class == "vj_fallout_scorps") then
 		if (rnd >= 30) then
 			ix.item.Spawn(RadscorpionItems, entity:GetPos() + Vector(0, 0, 16))
+		end
+	elseif (class == "vj_fallout_yaoguai") then
+		if (rnd >= 30) then
+			ix.item.Spawn(YaoGuiItems, entity:GetPos() + Vector(0, 0, 16))
 		end
 	end
 end
