@@ -1,697 +1,252 @@
+SWEP.Base				= "tfa_gun_base"
+SWEP.Category				= "Fallout RP" --The category.  Please, just choose something generic or something I've already done if you plan on only doing like one swep..
+SWEP.Manufacturer = "Illusion" --Gun Manufactrer (e.g. Hoeckler and Koch )
+SWEP.Author				= "Illusion" --Author Tooltip
+SWEP.Contact				= "https://steamcommunity.com/id/cheatingithinknot/" --Contact Info Tooltip
+SWEP.Purpose				= "" --Purpose Tooltip
+SWEP.Instructions				= L("item9mmPistolDesc") --Instructions Tooltip
+SWEP.Spawnable				= true --Can you, as a normal user, spawn this?
+SWEP.AdminSpawnable			= true --Can an adminstrator spawn this?  Does not tie into your admin mod necessarily, unless its coded to allow for GMod's default ranks somewhere in its code.  Evolve and ULX should work, but try to use weapon restriction rather than these.
+SWEP.DrawCrosshair			= true		-- Draw the crosshair?
+SWEP.DrawCrosshairIS = false --Draw the crosshair in ironsights?
+SWEP.PrintName				= L("9mm pistol")		-- Weapon name (Shown on HUD)
+SWEP.Slot				= 2			-- Slot in the weapon selection menu.  Subtract 1, as this starts at 0.
+SWEP.SlotPos				= 73			-- Position in the slot
+SWEP.AutoSwitchTo			= true		-- Auto switch to if we pick it up
+SWEP.AutoSwitchFrom			= true		-- Auto switch from if you pick up a better weapon
+SWEP.Weight				= 30			-- This controls how "good" the weapon is for autopickup.
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
-function SWEP:Think()
-	self:SetHoldType("revolver")
-	
-	if self.MoveTime and self.MoveTime < CurTime() and SERVER then
-		self.MoveTime = nil
-	end
-end
+--[[WEAPON HANDLING]]--
+SWEP.Primary.Sound = Sound("9mmshoot") -- This is the sound of the weapon, when you shoot.
+SWEP.Primary.PenetrationMultiplier = 1 --Change the amount of something this gun can penetrate through
+SWEP.Primary.Damage = 16 -- Damage, in standard damage points.
+SWEP.Primary.DamageTypeHandled = true --true will handle damagetype in base
+SWEP.Primary.DamageType = nil --See DMG enum.  This might be DMG_SHOCK, DMG_BURN, DMG_BULLET, etc.  Leave nil to autodetect.  DMG_AIRBOAT opens doors.
+SWEP.Primary.Force = nil --Force value, leave nil to autocalc
+SWEP.Primary.Knockback = nil --Autodetected if nil; this is the velocity kickback
+SWEP.Primary.HullSize = 0 --Big bullets, increase this value.  They increase the hull size of the hitscan bullet.
+SWEP.Primary.NumShots = 1 --The number of shots the weapon fires.  SWEP.Shotgun is NOT required for this to be >1.
+SWEP.Primary.Automatic = false -- Automatic/Semi Auto
+SWEP.Primary.RPM = 380 -- This is in Rounds Per Minute / RPM
+SWEP.Primary.RPM_Semi = 380 -- RPM for semi-automatic or burst fire.  This is in Rounds Per Minute / RPM
+SWEP.Primary.RPM_Burst = nil -- RPM for burst fire, overrides semi.  This is in Rounds Per Minute / RPM
+SWEP.Primary.DryFireDelay = nil --How long you have to wait after firing your last shot before a dryfire animation can play.  Leave nil for full empty attack length.  Can also use SWEP.StatusLength[ ACT_VM_BLABLA ]
+SWEP.Primary.BurstDelay = nil -- Delay between bursts, leave nil to autocalculate
+SWEP.FiresUnderwater = false
+--Miscelaneous Sounds
+--SWEP.IronInSound = Sound("aimin") --Sound to play when ironsighting in?  nil for default
+--SWEP.IronOutSound = Sound("aimout") --Sound to play when ironsighting out?  nil for default
+--Silencing
+SWEP.CanBeSilenced = false --Can we silence?  Requires animations.
+SWEP.Silenced = false --Silenced by default?
+-- Selective Fire Stuff
+SWEP.SelectiveFire = false --Allow selecting your firemode?
+SWEP.DisableBurstFire = false --Only auto/single?
+SWEP.OnlyBurstFire = false --No auto, only burst/single?
+SWEP.DefaultFireMode = "" --Default to auto or whatev
+SWEP.FireModeName = nil --Change to a text value to override it
+--Ammo Related
+SWEP.Primary.ClipSize = 13 -- This is the size of a clip
+SWEP.Primary.DefaultClip = 0 -- This is the number of bullets the gun gives you, counting a clip as defined directly above.
+SWEP.Primary.Ammo = "9mm" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
+SWEP.Primary.AmmoConsumption = 1 --Ammo consumed per shot
+--Pistol, buckshot, and slam like to ricochet. Use AirboatGun for a light metal peircing shotgun pellets
+SWEP.DisableChambering = false --Disable round-in-the-chamber
+--Recoil Related
+SWEP.Primary.KickUp = 0.4 -- This is the maximum upwards recoil (rise)
+SWEP.Primary.KickDown = 0.4 -- This is the maximum downwards recoil (skeet)
+SWEP.Primary.KickHorizontal = 0.2 -- This is the maximum sideways recoil (no real term)
+SWEP.Primary.StaticRecoilFactor = 0.5 --Amount of recoil to directly apply to EyeAngles.  Enter what fraction or percentage (in decimal form) you want.  This is also affected by a convar that defaults to 0.5.
+--Firing Cone Related
+SWEP.Primary.Spread = .07 --This is hip-fire acuracy.  Less is more (1 is horribly awful, .0001 is close to perfect)
+SWEP.Primary.IronAccuracy = .07 -- Ironsight accuracy, should be the same for shotguns
+--Unless you can do this manually, autodetect it.  If you decide to manually do these, uncomment this block and remove this line.
+SWEP.Primary.SpreadMultiplierMax = 3--How far the spread can expand when you shoot. Example val: 2.5
+SWEP.Primary.SpreadIncrement = 0.5 --What percentage of the modifier is added on, per shot.  Example val: 1/3.5
+SWEP.Primary.SpreadRecovery = 3--How much the spread recovers, per second. Example val: 3
+--Range Related
+SWEP.Primary.Range = 480 * 48 -- The distance the bullet can travel in source units.  Set to -1 to autodetect based on damage/rpm.
+SWEP.Primary.RangeFalloff = 0.5 -- The percentage of the range the bullet damage starts to fall off at.  Set to 0.8, for example, to start falling off after 80% of the range.
+--Penetration Related
+SWEP.MaxPenetrationCounter = 4 --The maximum number of ricochets.  To prevent stack overflows.
+--Misc
+SWEP.IronRecoilMultiplier = 0.6 --Multiply recoil by this factor when we're in ironsights.  This is proportional, not inversely.
+SWEP.CrouchAccuracyMultiplier = 0.5 --Less is more.  Accuracy * 0.5 = Twice as accurate, Accuracy * 0.1 = Ten times as accurate
+--Movespeed
+SWEP.MoveSpeed = 0.875 --Multiply the player's movespeed by this.
+SWEP.IronSightsMoveSpeed = SWEP.MoveSpeed  * 0.8 --Multiply the player's movespeed by this when sighting.
+--[[PROJECTILES]]--
+SWEP.ProjectileEntity = nil --Entity to shoot
+SWEP.ProjectileVelocity = 0 --Entity to shoot's velocity
+SWEP.ProjectileModel = nil --Entity to shoot's model
+--[[VIEWMODEL]]--
+SWEP.ViewModel			= "models/illusion/fwp/v_9mmpistol.mdl" --Viewmodel path
+SWEP.ViewModelFOV			= 75		-- This controls how big the viewmodel looks.  Less is more.
+SWEP.ViewModelFlip			= false		-- Set this to true for CSS models, or false for everything else (with a righthanded viewmodel.)
+SWEP.UseHands = true --Use gmod c_arms system.
+SWEP.VMPos = Vector(0,0,0) --The viewmodel positional offset, constantly.  Subtract this from any other modifications to viewmodel position.
+SWEP.VMAng = Vector(0,0,0) --The viewmodel angular offset, constantly.   Subtract this from any other modifications to viewmodel angle.
+SWEP.VMPos_Additive = false --Set to false for an easier time using VMPos. If true, VMPos will act as a constant delta ON TOP OF ironsights, run, whateverelse
+SWEP.CenteredPos = nil --The viewmodel positional offset, used for centering.  Leave nil to autodetect using ironsights.
+SWEP.CenteredAng = nil --The viewmodel angular offset, used for centering.  Leave nil to autodetect using ironsights.
+SWEP.Bodygroups_V = nil --{
+	--[0] = 1,
+	--[1] = 4,
+	--[2] = etc.
+--}
+--[[WORLDMODEL]]--
+SWEP.WorldModel			= "models/illusion/fwp/w_9mmpistol.mdl" -- Weapon world model path
+SWEP.ShowWorldModel = true
+SWEP.Bodygroups_W = nil --{
+--[0] = 1,
+--[1] = 4,
+--[2] = etc.
+--}
+SWEP.HoldType = "pistol" -- This is how others view you carrying the weapon. Options include:
+-- normal melee melee2 fist knife smg ar2 pistol rpg physgun grenade shotgun crossbow slam passive
+-- You're mostly going to use ar2, smg, shotgun or pistol. rpg and crossbow make for good sniper rifles
+SWEP.Offset = {
+	Pos = {
+		Up = -0.925,
+		Right = 1.582,
+		Forward = 7.151
+	},
+	Ang = {
+		Up = 0,
+		Right = 0,
+		Forward = 180
+	},
+	Scale = 1.0
+} --Procedural world model animation, defaulted for CS:S purposes.
+--Vector(-10.035, 5.186, -6.006), angle = Angle(0, 0, 180) 9mm
 
+-- Vector(7.151, 1.582, -0.925), angle = Angle(0, 0, 180)new 1
+SWEP.ThirdPersonReloadDisable = false --Disable third person reload?  True disables.
+--[[SCOPES]]--
+SWEP.IronSightsSensitivity = 1 --Useful for a RT scope.  Change this to 0.25 for 25% sensitivity.  This is if normal FOV compenstaion isn't your thing for whatever reason, so don't change it for normal scopes.
+SWEP.BoltAction = false --Unscope/sight after you shoot?
+SWEP.Scoped = false --Draw a scope overlay?
+SWEP.ScopeOverlayThreshold = 0.875 --Percentage you have to be sighted in to see the scope.
+SWEP.BoltTimerOffset = 0.25 --How long you stay sighted in after shooting, with a bolt action.
+SWEP.ScopeScale = 0.5 --Scale of the scope overlay
+SWEP.ReticleScale = 0.7 --Scale of the reticle overlay
+--GDCW Overlay Options.  Only choose one.
 
-local ActIndex = {}		
-	ActIndex["pistol"] 		= ACT_HL2MP_IDLE_PISTOL
-	ActIndex["smg"] 			= ACT_HL2MP_IDLE_SMG1
-	ActIndex["grenade"] 		= ACT_HL2MP_IDLE_GRENADE
-	ActIndex["ar2"] 			= ACT_HL2MP_IDLE_AR2
-	ActIndex["shotgun"] 		= ACT_HL2MP_IDLE_SHOTGUN
-	ActIndex["rpg"]	 		= ACT_HL2MP_IDLE_RPG
-	ActIndex["physgun"] 		= ACT_HL2MP_IDLE_PHYSGUN
-	ActIndex["crossbow"] 		= ACT_HL2MP_IDLE_CROSSBOW
-	ActIndex["melee"] 		= ACT_HL2MP_IDLE_MELEE
-	ActIndex["slam"] 			= ACT_HL2MP_IDLE_SLAM
-	ActIndex["normal"]		= ACT_HL2MP_IDLE
-	ActIndex["knife"]			= ACT_HL2MP_IDLE_KNIFE
-	ActIndex["sword"]			= ACT_HL2MP_IDLE_MELEE2
-	ActIndex["passive"]		= ACT_HL2MP_IDLE_PASSIVE
-	ActIndex["fist"]			= ACT_HL2MP_IDLE_FIST
+--[[SHOTGUN CODE]]--
+SWEP.Shotgun = false --Enable shotgun style reloading.
+SWEP.ShotgunEmptyAnim = false --Enable emtpy reloads on shotguns?
+SWEP.ShotgunEmptyAnim_Shell = true --Enable insertion of a shell directly into the chamber on empty reload?
+SWEP.ShellTime = .35 -- For shotguns, how long it takes to insert a shell.
+--[[SPRINTING]]--
+SWEP.RunSightsPos = Vector(0, 0, 0) --Change this, using SWEP Creation Kit preferably
+SWEP.RunSightsAng = Vector(-10, 0, 0) --Change this, using SWEP Creation Kit preferably
+--[[IRONSIGHTS]]--
+SWEP.data = {}
+SWEP.data.ironsights = 1 --Enable Ironsights
+SWEP.Secondary.IronFOV = 90 -- How much you 'zoom' in. Less is more!  Don't have this be <= 0.  A good value for ironsights is like 70.
+SWEP.IronSightsPos = Vector(-4.12, -3.241, 2.16)
+SWEP.IronSightsAng = Vector(0, -2.3, 0)
 
-local ActIndex = {
-	[ "pistol" ] 		= ACT_HL2MP_IDLE_PISTOL,
-	[ "revolver" ] 		= ACT_HL2MP_IDLE_REVOLVER,
-	[ "smg" ] 			= ACT_HL2MP_IDLE_SMG1,
-	[ "grenade" ] 		= ACT_HL2MP_IDLE_GRENADE,
-	[ "ar2" ] 			= ACT_HL2MP_IDLE_AR2,
-	[ "shotgun" ] 		= ACT_HL2MP_IDLE_SHOTGUN,
-	[ "rpg" ]	 		= ACT_HL2MP_IDLE_RPG,
-	[ "physgun" ] 		= ACT_HL2MP_IDLE_PHYSGUN,
-	[ "crossbow" ] 		= ACT_HL2MP_IDLE_CROSSBOW,
-	[ "melee" ] 		= ACT_HL2MP_IDLE_MELEE,
-	[ "slam" ] 			= ACT_HL2MP_IDLE_SLAM,
-	[ "normal" ]		= ACT_HL2MP_IDLE,
-	[ "fist" ]			= ACT_HL2MP_IDLE_FIST,
-	[ "melee2" ]		= ACT_HL2MP_IDLE_MELEE2,
-	[ "passive" ]		= ACT_HL2MP_IDLE_PASSIVE,
-	[ "knife" ]			= ACT_HL2MP_IDLE_KNIFE
+--[[INSPECTION]]--
+SWEP.InspectPos = Vector(9.68, 0, -4.24)
+SWEP.InspectAng = Vector(9.1, 29.5, -4.2)
+--[[VIEWMODEL ANIMATION HANDLING]]--
+SWEP.AllowViewAttachment = false --Allow the view to sway based on weapon attachment while reloading or drawing, IF THE CLIENT HAS IT ENABLED IN THEIR CONVARS.
+--[[VIEWMODEL BLOWBACK]]--
+SWEP.BlowbackEnabled = true --Enable Blowback?
+SWEP.BlowbackVector = Vector(0,-2,0) --Vector to move bone <or root> relative to bone <or view> orientation.
+SWEP.BlowbackCurrentRoot = 0 --Amount of blowback currently, for root
+SWEP.BlowbackCurrent = 0 --Amount of blowback currently, for bones
+SWEP.BlowbackBoneMods = nil --Viewmodel bone mods via SWEP Creation Kit
+SWEP.Blowback_Only_Iron = true --Only do blowback on ironsights
+SWEP.Blowback_PistolMode = false --Do we recover from blowback when empty?
+SWEP.Blowback_Shell_Enabled = true --Shoot shells through blowback animations
+SWEP.Blowback_Shell_Effect = "ShellEject"--Which shell effect to use
+--[[VIEWMODEL PROCEDURAL ANIMATION]]--
+SWEP.DoProceduralReload = false--Animate first person reload using lua?
+SWEP.ProceduralReloadTime = 1 --Procedural reload time?
+--[[HOLDTYPES]]--
+SWEP.IronSightHoldTypeOverride = "" --This variable overrides the ironsights holdtype, choosing it instead of something from the above tables.  Change it to "" to disable.
+SWEP.SprintHoldTypeOverride = "" --This variable overrides the sprint holdtype, choosing it instead of something from the above tables.  Change it to "" to disable.
+--[[ANIMATION]]--
+
+-- SWEP.StatusLengthOverride = {
+	-- ["base_reload"] = 57 / 30,
+	-- ["base_reload_empty"] = 66 / 30,
+	-- ["foregrip_reload"] = 57 / 30,
+	-- ["foregrip_reload_empty"] = 66 / 30,
+	-- ["gl_reload"] = 57 / 30,
+	-- ["gl_reload_empty"] = 66 / 30,
+	-- ["glsetup_reload"] = 38 / 30
+-- } --Changes the status delay of a given animation; only used on reloads.  Otherwise, use SequenceLengthOverride or one of the others
+SWEP.SequenceLengthOverride = {} --Changes both the status delay and the nextprimaryfire of a given animation
+SWEP.SequenceRateOverride = {} --Like above but changes animation length to a target
+SWEP.SequenceRateOverrideScaled = {} --Like above but scales animation length rather than being absolute
+
+SWEP.ProceduralHoslterEnabled = nil
+SWEP.ProceduralHolsterTime = 0.3
+SWEP.ProceduralHolsterPos = Vector(3, 0, -5)
+SWEP.ProceduralHolsterAng = Vector(-40, -30, 10)
+
+SWEP.Sights_Mode = TFA.Enum.LOCOMOTION_HYBRID -- ANI = mdl, HYBRID = lua but continue idle, Lua = stop mdl animation
+SWEP.Sprint_Mode = TFA.Enum.LOCOMOTION_LUA -- ANI = mdl, HYBRID = ani + lua, Lua = lua only
+SWEP.SprintBobMult = 0
+SWEP.Idle_Mode = TFA.Enum.IDLE_BOTH --TFA.Enum.IDLE_DISABLED = no idle, TFA.Enum.IDLE_LUA = lua idle, TFA.Enum.IDLE_ANI = mdl idle, TFA.Enum.IDLE_BOTH = TFA.Enum.IDLE_ANI + TFA.Enum.IDLE_LUA
+SWEP.Idle_Blend = 0.25 --Start an idle this far early into the end of a transition
+SWEP.Idle_Smooth = 0.05 --Start an idle this far early into the end of another animation
+--MDL Animations Below
+SWEP.IronAnimation = {
+	["shoot"] = {
+		["type"] = TFA.Enum.ANIMATION_ACT,  -- Sequence or act
+		["value"] = ACT_VM_PRIMARYATTACK_1, -- Number for act, String/Number for sequence
+		["value_empty"] = ACT_VM_IDLE,
+	}, -- Inward transition
 }
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
-function SWEP:Initialize()
-	self:SetWeaponHoldType("revolver")
-end
-
-
-function SWEP:Think()
-	self:SetWeaponHoldType("revolver")
-	
-	if self.MoveTime and self.MoveTime < CurTime() and SERVER then
-		self.MoveTime = nil
-	end
-end
-
-
-
-
-
-
-
-
-if (CLIENT) then
-SWEP.VElements = {
-	["pistol"] = { type = "Model", model = "models/Halokiller38/fallout/weapons/Pistols/9mmpistol.mdl", bone = "v_weapon.FIVESEVEN_PARENT", rel = "", pos = Vector(-0.109, -0.909, 0.694), angle = Angle(0, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+SWEP.SprintAnimation = {
+	["loop"] = {
+		["type"] = TFA.Enum.ANIMATION_SEQ, --Sequence or act
+		["value"] = "base_sprint", --Number for act, String/Number for sequence
+		["is_idle"] = true
+	}
 }
+--[[EFFECTS]]--
+--Attachments
+SWEP.MuzzleAttachment			= "1" 		-- Should be "1" for CSS models or "muzzle" for hl2 models
+SWEP.ShellAttachment			= "2" 		-- Should be "2" for CSS models or "shell" for hl2 models
+SWEP.MuzzleFlashEnabled = true --Enable muzzle flash
+SWEP.MuzzleAttachmentRaw = nil --This will override whatever string you gave.  This is the raw attachment number.  This is overridden or created when a gun makes a muzzle event.
+SWEP.AutoDetectMuzzleAttachment = false --For multi-barrel weapons, detect the proper attachment?
+SWEP.MuzzleFlashEffect = nil --Change to a string of your muzzle flash effect.  Copy/paste one of the existing from the base.
+SWEP.SmokeParticle = nil --Smoke particle (ID within the PCF), defaults to something else based on holdtype; "" to disable
+SWEP.EjectionSmokeEnabled = false --Disable automatic ejection smoke
+--Shell eject override
+SWEP.LuaShellEject = true --Enable shell ejection through lua?
+SWEP.LuaShellEjectDelay = 0 --The delay to actually eject things
+SWEP.LuaShellEffect = "ShellEject" --The effect used for shell ejection; Defaults to that used for blowback
+--Tracer Stuff
+SWEP.TracerName 		= nil 	--Change to a string of your tracer name.  Can be custom. There is a nice example at https://github.com/garrynewman/garrysmod/blob/master/garrysmod/gamemodes/base/entities/effects/tooltracer.lua
+SWEP.TracerCount 		= 3 	--0 disables, otherwise, 1 in X chance
+--Impact Effects
+SWEP.ImpactEffect = nil--Impact Effect
+SWEP.ImpactDecal = nil--Impact Decal
+--[[EVENT TABLE]]--
+--example:
+--SWEP.EventTable = {
+--	[ACT_VM_RELOAD] = {
+--		{ ["time"] = 0.1, ["type"] = "lua", ["value"] = function( wep, viewmodel ) end, ["client"] = true, ["server"] = true},
+--		{ ["time"] = 0.1, ["type"] = "sound", ["value"] = Sound("x") }
+--	}
+--}
+--[[RENDER TARGET]]--
+SWEP.RTMaterialOverride = nil -- Take the material you want out of print(LocalPlayer():GetViewModel():GetMaterials()), subtract 1 from its index, and set it to this.
+SWEP.RTOpaque = false -- Do you want your render target to be opaque?
+SWEP.RTCode = nil--function(self) return end --This is the function to draw onto your rendertarget
+--[[AKIMBO]]--
+SWEP.Akimbo = false --Akimbo gun?  Alternates between primary and secondary attacks.
+SWEP.AnimCycle = 0 -- Start on the right
+--[[ATTACHMENTS]]--
 SWEP.WElements = {
-	["pistol"] = { type = "Model", model = "models/Halokiller38/fallout/weapons/Pistols/9mmpistol.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.503, 1.679, 0.488), angle = Angle(180, -90, 1), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["ref"] = { type = "Model", model = SWEP.WorldModel, bone = "oof", rel = "", pos = Vector(0, 0, 0), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}, bonemerge = true, active = false },
 }
-end
-
-SWEP.Base 				= "kermite_base_pistol"
-SWEP.Category			= "Fallout RP"
-SWEP.HoldType = "revolver"
-SWEP.ViewModelFOV = 70
-SWEP.ViewModelFlip = true
-SWEP.ViewModel = "models/weapons/v_pist_fiveseven.mdl"
-SWEP.WorldModel = "models/Halokiller38/fallout/weapons/Pistols/9mmpistol.mdl"
-SWEP.ShowViewModel = true
-SWEP.ShowWorldModel = false
-SWEP.ViewModelBoneMods = {
-	["v_weapon.FIVESEVEN_TRIGGER"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["v_weapon.FIVESEVEN_SLIDE"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["v_weapon.FIVESEVEN_PARENT"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["v_weapon.FIVESEVEN_CLIP"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
-}
-
-SWEP.Spawnable			= true
-SWEP.AdminSpawnable		= false
-
-SWEP.Primary.Sound 		= Sound("weapons/pistol_9mm/wpn_9mm_fire_2d.wav")
--- SWEP.Primary.SuppressorSound	= Sound("Weapon_USP.SilencedShot")
--- SWEP.Primary.NoSuppressorSound= Sound("Weapon_USP.Single")
-SWEP.Primary.Recoil		= 1.25
-SWEP.Primary.Damage		= 16
-SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.07
-SWEP.Primary.Delay 		= 0.25
-
-SWEP.Primary.ClipSize		= 13				// Size of a clip
-SWEP.Primary.DefaultClip	= 0					// Default number of bullets in a clip
-SWEP.Primary.Automatic		= false				// Automatic/Semi Auto
-SWEP.Primary.Ammo			= "9mm"
-
-SWEP.Secondary.ClipSize		= -1					// Size of a clip
-SWEP.Secondary.DefaultClip	= -1					// Default number of bullets in a clip
-SWEP.Secondary.Automatic	= false				// Automatic/Semi Auto
-SWEP.Secondary.Ammo		= "none"
-
-/*---------------------------------------------------------
-Muzzle Effect + Shell Effect
----------------------------------------------------------*/
-SWEP.MuzzleEffect			= "rg_muzzle_rifle" -- This is an extra muzzleflash effect
--- Available muzzle effects: rg_muzzle_grenade, rg_muzzle_highcal, rg_muzzle_hmg, rg_muzzle_pistol, rg_muzzle_rifle, rg_muzzle_silenced, none
-
-SWEP.ShellEffect			= "rg_shelleject" -- This is a shell ejection effect
--- Available shell eject effects: rg_shelleject, rg_shelleject_rifle, rg_shelleject_shotgun, none
-
-SWEP.MuzzleAttachment		= "1" -- Should be "1" for CSS models or "muzzle" for hl2 models
-SWEP.ShellEjectAttachment	= "0" -- Should be "2" for CSS models or "1" for hl2 models
-
-SWEP.EjectDelay			= "0"
-/*-------------------------------------------------------*/
-SWEP.IronSightsPos = Vector(4.333, -2, 2.496)
-SWEP.IronSightsAng = Vector(0, -0.25, -0.5)
-SWEP.RunSightsPos  = Vector (0.0961, 0, 5.9811)
-SWEP.RunSightsAng   = Vector (-25.4014, 2.0332, 0)
-
-/*---------------------------------------------------------
-   Name: SWEP:ShootAnimation()
----------------------------------------------------------*/
-function SWEP:ShootAnimation()
-
-	if (self.Weapon:Clip1() <= 0) then
-		if self.Weapon:GetDTBool(3) and self.Type == 2 then
-			self.Weapon:SendWeaponAnim(ACT_VM_DRYFIRE_SILENCED)	// View model animation
-		else
-			self.Weapon:SendWeaponAnim(ACT_VM_DRYFIRE) 		// View model animation
-		end
-	else
-		if self.Weapon:GetDTBool(3) and self.Type == 2 then
-			self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
-			local Animation = self.Owner:GetViewModel()
-			Animation:SetSequence(Animation:LookupSequence("shoot1"))
-		else
-			self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK) 		// View model animation
-		end
-	end
-end
-
-
-
-
-
-function SWEP:SetWeaponHoldType( t )
-	local index = ActIndex[ t ]
-	if (index == nil) then
-		Msg( "SWEP:SetWeaponHoldType - ActIndex[ \""..t.."\" ] isn't set! (defaulting to normal)\n" )
-		t = "normal"
-	end
-	if (index ~= nil) then 
- self.ActivityTranslate = {} 
- self.ActivityTranslate [ ACT_MP_STAND_IDLE ] = index 
- self.ActivityTranslate [ ACT_MP_WALK ] = index+1 
- self.ActivityTranslate [ ACT_MP_RUN ] = index+2 
- self.ActivityTranslate [ ACT_MP_CROUCH_IDLE ] = index+3 
- self.ActivityTranslate [ ACT_MP_CROUCHWALK ] = index+4 
- self.ActivityTranslate [ ACT_MP_ATTACK_STAND_PRIMARYFIRE ] = index+5 
- self.ActivityTranslate [ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ] = index+5 
- self.ActivityTranslate [ ACT_MP_RELOAD_STAND ] = index+6 
- self.ActivityTranslate [ ACT_MP_RELOAD_CROUCH ] = index+6 
- self.ActivityTranslate [ ACT_MP_JUMP ] = index+7 
- self.ActivityTranslate [ ACT_RANGE_ATTACK1 ] = index+8 
- end
-	if t == "normal" then
-		self.ActivityTranslate [ ACT_MP_JUMP ] = ACT_HL2MP_JUMP_SLAM
-	end
-	if t == "passive" then
-		self.ActivityTranslate [ ACT_MP_CROUCH_IDLE ] = ACT_HL2MP_CROUCH_IDLE
-	end
-	if t == "knife" || t == "melee2" then
-		self.ActivityTranslate [ ACT_MP_CROUCH_IDLE ] = nil
-	end
-	self:SetupWeaponHoldTypeForAI( t )
-	self._InternalHoldType = t
-end
-
-
-
-
-/*---------------------------------------------------------
-   Name: SWEP:TranslateActivity()
-   Desc: Translate a player's activity into a weapon's activity.
-	   So for example, ACT_HL2MP_RUN becomes ACT_HL2MP_RUN_PISTOL
-	   depending on how you want the player to be holding the weapon.
----------------------------------------------------------*/
-function SWEP:TranslateActivity(act)
-
-	if (self.Owner:IsNPC()) then
-		if (self.ActivityTranslateAI[act]) then
-			return self.ActivityTranslateAI[act]
-		end
-
-		return -1
-	end
-
-	if (self.ActivityTranslate[act] != nil) then
-		return self.ActivityTranslate[act]
-	end
-	
-	return -1
-end
-
-
-function SWEP:Initialize()
-
-	// other initialize code goes here
-
-	if CLIENT then
-	
-		// Create a new table for every weapon instance
-		self.VElements = table.FullCopy( self.VElements )
-		self.WElements = table.FullCopy( self.WElements )
-		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
-
-		self:CreateModels(self.VElements) // create viewmodels
-		self:CreateModels(self.WElements) // create worldmodels
-		
-		// init view model bone build function
-		if IsValid(self.Owner) then
-			local vm = self.Owner:GetViewModel()
-			if IsValid(vm) then
-				self:ResetBonePositions(vm)
-				
-				// Init viewmodel visibility
-				if (self.ShowViewModel == nil or self.ShowViewModel) then
-					vm:SetColor(Color(255,255,255,255))
-				else
-					// we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
-					vm:SetColor(Color(255,255,255,1))
-					// ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
-					// however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
-					vm:SetMaterial("Debug/hsv")			
-				end
-			end
-		end
-		
-	end
-
-end
-
-function SWEP:Holster()
-	
-	if CLIENT and IsValid(self.Owner) then
-		local vm = self.Owner:GetViewModel()
-		if IsValid(vm) then
-			self:ResetBonePositions(vm)
-		end
-	end
-	
-	return true
-end
-
-function SWEP:OnRemove()
-	self:Holster()
-end
-
-if CLIENT then
-
-	SWEP.vRenderOrder = nil
-	function SWEP:ViewModelDrawn()
-		
-		local vm = self.Owner:GetViewModel()
-		if !IsValid(vm) then return end
-		
-		if (!self.VElements) then return end
-		
-		self:UpdateBonePositions(vm)
-
-		if (!self.vRenderOrder) then
-			
-			// we build a render order because sprites need to be drawn after models
-			self.vRenderOrder = {}
-
-			for k, v in pairs( self.VElements ) do
-				if (v.type == "Model") then
-					table.insert(self.vRenderOrder, 1, k)
-				elseif (v.type == "Sprite" or v.type == "Quad") then
-					table.insert(self.vRenderOrder, k)
-				end
-			end
-			
-		end
-
-		for k, name in ipairs( self.vRenderOrder ) do
-		
-			local v = self.VElements[name]
-			if (!v) then self.vRenderOrder = nil break end
-			if (v.hide) then continue end
-			
-			local model = v.modelEnt
-			local sprite = v.spriteMaterial
-			
-			if (!v.bone) then continue end
-			
-			local pos, ang = self:GetBoneOrientation( self.VElements, v, vm )
-			
-			if (!pos) then continue end
-			
-			if (v.type == "Model" and IsValid(model)) then
-
-				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
-				ang:RotateAroundAxis(ang:Up(), v.angle.y)
-				ang:RotateAroundAxis(ang:Right(), v.angle.p)
-				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-
-				model:SetAngles(ang)
-				//model:SetModelScale(v.size)
-				local matrix = Matrix()
-				matrix:Scale(v.size)
-				model:EnableMatrix( "RenderMultiply", matrix )
-				
-				if (v.material == "") then
-					model:SetMaterial("")
-				elseif (model:GetMaterial() != v.material) then
-					model:SetMaterial( v.material )
-				end
-				
-				if (v.skin and v.skin != model:GetSkin()) then
-					model:SetSkin(v.skin)
-				end
-				
-				if (v.bodygroup) then
-					for k, v in pairs( v.bodygroup ) do
-						if (model:GetBodygroup(k) != v) then
-							model:SetBodygroup(k, v)
-						end
-					end
-				end
-				
-				if (v.surpresslightning) then
-					render.SuppressEngineLighting(true)
-				end
-				
-				render.SetColorModulation(v.color.r/255, v.color.g/255, v.color.b/255)
-				render.SetBlend(v.color.a/255)
-				model:DrawModel()
-				render.SetBlend(1)
-				render.SetColorModulation(1, 1, 1)
-				
-				if (v.surpresslightning) then
-					render.SuppressEngineLighting(false)
-				end
-				
-			elseif (v.type == "Sprite" and sprite) then
-				
-				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
-				render.SetMaterial(sprite)
-				render.DrawSprite(drawpos, v.size.x, v.size.y, v.color)
-				
-			elseif (v.type == "Quad" and v.draw_func) then
-				
-				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
-				ang:RotateAroundAxis(ang:Up(), v.angle.y)
-				ang:RotateAroundAxis(ang:Right(), v.angle.p)
-				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
-				cam.Start3D2D(drawpos, ang, v.size)
-					v.draw_func( self )
-				cam.End3D2D()
-
-			end
-			
-		end
-		
-	end
-
-	SWEP.wRenderOrder = nil
-	function SWEP:DrawWorldModel()
-		
-		if (self.ShowWorldModel == nil or self.ShowWorldModel) then
-			self:DrawModel()
-		end
-		
-		if (!self.WElements) then return end
-		
-		if (!self.wRenderOrder) then
-
-			self.wRenderOrder = {}
-
-			for k, v in pairs( self.WElements ) do
-				if (v.type == "Model") then
-					table.insert(self.wRenderOrder, 1, k)
-				elseif (v.type == "Sprite" or v.type == "Quad") then
-					table.insert(self.wRenderOrder, k)
-				end
-			end
-
-		end
-		
-		if (IsValid(self.Owner)) then
-			bone_ent = self.Owner
-		else
-			// when the weapon is dropped
-			bone_ent = self
-		end
-		
-		for k, name in pairs( self.wRenderOrder ) do
-		
-			local v = self.WElements[name]
-			if (!v) then self.wRenderOrder = nil break end
-			if (v.hide) then continue end
-			
-			local pos, ang
-			
-			if (v.bone) then
-				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent )
-			else
-				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent, "ValveBiped.Bip01_R_Hand" )
-			end
-			
-			if (!pos) then continue end
-			
-			local model = v.modelEnt
-			local sprite = v.spriteMaterial
-			
-			if (v.type == "Model" and IsValid(model)) then
-
-				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
-				ang:RotateAroundAxis(ang:Up(), v.angle.y)
-				ang:RotateAroundAxis(ang:Right(), v.angle.p)
-				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-
-				model:SetAngles(ang)
-				//model:SetModelScale(v.size)
-				local matrix = Matrix()
-				matrix:Scale(v.size)
-				model:EnableMatrix( "RenderMultiply", matrix )
-				
-				if (v.material == "") then
-					model:SetMaterial("")
-				elseif (model:GetMaterial() != v.material) then
-					model:SetMaterial( v.material )
-				end
-				
-				if (v.skin and v.skin != model:GetSkin()) then
-					model:SetSkin(v.skin)
-				end
-				
-				if (v.bodygroup) then
-					for k, v in pairs( v.bodygroup ) do
-						if (model:GetBodygroup(k) != v) then
-							model:SetBodygroup(k, v)
-						end
-					end
-				end
-				
-				if (v.surpresslightning) then
-					render.SuppressEngineLighting(true)
-				end
-				
-				render.SetColorModulation(v.color.r/255, v.color.g/255, v.color.b/255)
-				render.SetBlend(v.color.a/255)
-				model:DrawModel()
-				render.SetBlend(1)
-				render.SetColorModulation(1, 1, 1)
-				
-				if (v.surpresslightning) then
-					render.SuppressEngineLighting(false)
-				end
-				
-			elseif (v.type == "Sprite" and sprite) then
-				
-				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
-				render.SetMaterial(sprite)
-				render.DrawSprite(drawpos, v.size.x, v.size.y, v.color)
-				
-			elseif (v.type == "Quad" and v.draw_func) then
-				
-				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
-				ang:RotateAroundAxis(ang:Up(), v.angle.y)
-				ang:RotateAroundAxis(ang:Right(), v.angle.p)
-				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
-				cam.Start3D2D(drawpos, ang, v.size)
-					v.draw_func( self )
-				cam.End3D2D()
-
-			end
-			
-		end
-		
-	end
-
-	function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
-		
-		local bone, pos, ang
-		if (tab.rel and tab.rel != "") then
-			
-			local v = basetab[tab.rel]
-			
-			if (!v) then return end
-			
-			// Technically, if there exists an element with the same name as a bone
-			// you can get in an infinite loop. Let's just hope nobody's that stupid.
-			pos, ang = self:GetBoneOrientation( basetab, v, ent )
-			
-			if (!pos) then return end
-			
-			pos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
-			ang:RotateAroundAxis(ang:Up(), v.angle.y)
-			ang:RotateAroundAxis(ang:Right(), v.angle.p)
-			ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
-		else
-		
-			bone = ent:LookupBone(bone_override or tab.bone)
-
-			if (!bone) then return end
-			
-			pos, ang = Vector(0,0,0), Angle(0,0,0)
-			local m = ent:GetBoneMatrix(bone)
-			if (m) then
-				pos, ang = m:GetTranslation(), m:GetAngles()
-			end
-			
-			if (IsValid(self.Owner) and self.Owner:IsPlayer() and 
-				ent == self.Owner:GetViewModel() and self.ViewModelFlip) then
-				ang.r = -ang.r // Fixes mirrored models
-			end
-		
-		end
-		
-		return pos, ang
-	end
-
-	function SWEP:CreateModels( tab )
-
-		if (!tab) then return end
-
-		// Create the clientside models here because Garry says we can't do it in the render hook
-		for k, v in pairs( tab ) do
-			if (v.type == "Model" and v.model and v.model != "" and (!IsValid(v.modelEnt) or v.createdModel != v.model) and 
-					string.find(v.model, ".mdl") and file.Exists (v.model, "GAME") ) then
-				
-				v.modelEnt = ClientsideModel(v.model, RENDER_GROUP_VIEW_MODEL_OPAQUE)
-				if (IsValid(v.modelEnt)) then
-					v.modelEnt:SetPos(self:GetPos())
-					v.modelEnt:SetAngles(self:GetAngles())
-					v.modelEnt:SetParent(self)
-					v.modelEnt:SetNoDraw(true)
-					v.createdModel = v.model
-				else
-					v.modelEnt = nil
-				end
-				
-			elseif (v.type == "Sprite" and v.sprite and v.sprite != "" and (!v.spriteMaterial or v.createdSprite != v.sprite) 
-				and file.Exists ("materials/"..v.sprite..".vmt", "GAME")) then
-				
-				local name = v.sprite.."-"
-				local params = { ["$basetexture"] = v.sprite }
-				// make sure we create a unique name based on the selected options
-				local tocheck = { "nocull", "additive", "vertexalpha", "vertexcolor", "ignorez" }
-				for i, j in pairs( tocheck ) do
-					if (v[j]) then
-						params["$"..j] = 1
-						name = name.."1"
-					else
-						name = name.."0"
-					end
-				end
-
-				v.createdSprite = v.sprite
-				v.spriteMaterial = CreateMaterial(name,"UnlitGeneric",params)
-				
-			end
-		end
-		
-	end
-	
-	local allbones
-	local hasGarryFixedBoneScalingYet = false
-
-	function SWEP:UpdateBonePositions(vm)
-		
-		if self.ViewModelBoneMods then
-			
-			if (!vm:GetBoneCount()) then return end
-			
-			// !! WORKAROUND !! //
-			// We need to check all model names :/
-			local loopthrough = self.ViewModelBoneMods
-			if (!hasGarryFixedBoneScalingYet) then
-				allbones = {}
-				for i=0, vm:GetBoneCount() do
-					local bonename = vm:GetBoneName(i)
-					if (self.ViewModelBoneMods[bonename]) then 
-						allbones[bonename] = self.ViewModelBoneMods[bonename]
-					else
-						allbones[bonename] = { 
-							scale = Vector(1,1,1),
-							pos = Vector(0,0,0),
-							angle = Angle(0,0,0)
-						}
-					end
-				end
-				
-				loopthrough = allbones
-			end
-			// !! ----------- !! //
-			
-			for k, v in pairs( loopthrough ) do
-				local bone = vm:LookupBone(k)
-				if (!bone) then continue end
-				
-				// !! WORKAROUND !! //
-				local s = Vector(v.scale.x,v.scale.y,v.scale.z)
-				local p = Vector(v.pos.x,v.pos.y,v.pos.z)
-				local ms = Vector(1,1,1)
-				if (!hasGarryFixedBoneScalingYet) then
-					local cur = vm:GetBoneParent(bone)
-					while(cur >= 0) do
-						local pscale = loopthrough[vm:GetBoneName(cur)].scale
-						ms = ms * pscale
-						cur = vm:GetBoneParent(cur)
-					end
-				end
-				
-				s = s * ms
-				// !! ----------- !! //
-				
-				if vm:GetManipulateBoneScale(bone) != s then
-					vm:ManipulateBoneScale( bone, s )
-				end
-				if vm:GetManipulateBoneAngles(bone) != v.angle then
-					vm:ManipulateBoneAngles( bone, v.angle )
-				end
-				if vm:GetManipulateBonePosition(bone) != p then
-					vm:ManipulateBonePosition( bone, p )
-				end
-			end
-		else
-			self:ResetBonePositions(vm)
-		end
-		   
-	end
-	 
-	function SWEP:ResetBonePositions(vm)
-		
-		if (!vm:GetBoneCount()) then return end
-		for i=0, vm:GetBoneCount() do
-			vm:ManipulateBoneScale( i, Vector(1, 1, 1) )
-			vm:ManipulateBoneAngles( i, Angle(0, 0, 0) )
-			vm:ManipulateBonePosition( i, Vector(0, 0, 0) )
-		end
-		
-	end
-
-	/**************************
-		Global utility code
-	**************************/
-
-	// Fully copies the table, meaning all tables inside this table are copied too and so on (normal table.Copy copies only their reference).
-	// Does not copy entities of course, only copies their reference.
-	// WARNING: do not use on tables that contain themselves somewhere down the line or you'll get an infinite loop
-	function table.FullCopy( tab )
-
-		if (!tab) then return nil end
-		
-		local res = {}
-		for k, v in pairs( tab ) do
-			if (type(v) == "table") then
-				res[k] = table.FullCopy(v) // recursion ho!
-			elseif (type(v) == "Vector") then
-				res[k] = Vector(v.x, v.y, v.z)
-			elseif (type(v) == "Angle") then
-				res[k] = Angle(v.p, v.y, v.r)
-			else
-				res[k] = v
-			end
-		end
-		
-		return res
-		
-	end
-	
-end
+DEFINE_BASECLASS( SWEP.Base )
