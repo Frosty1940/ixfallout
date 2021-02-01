@@ -78,6 +78,6 @@ LANGUAGE = {
 	itemYumYumDeviledEggsDesc = "The only known product of YumYum, a pre-War food production company. They come in a blue and red package.",
 	itemIrrYumYumDEggsDesc = "The only known product of YumYum, a pre-War food production company. They come in a blue and red package.\nThis has been exposed to the high levels of radiation.",
 	itemBoiledWaterDesc = "It is the most common water in the wasteland.\nBut boiled enought to drink at least not irradiated hard.",
-	itemYaoGuiMeatDesc = "A piece of raw meat from the body of a yao guai.",
-	itemYaoGuiRibsDesc = "A cooked rib meat of a yao guai.",
+	itemYaoGuaiMeatDesc = "A piece of raw meat from the body of a yao guai.",
+	itemYaoGuaiRibsDesc = "A cooked rib meat of a yao guai.",
 }
