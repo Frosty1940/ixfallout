@@ -23,7 +23,7 @@ if (CLIENT) then
 		category = "legs"
 	})
 
-	ix.option.Add("legsInVehicle", ix.type.bool, true, {
+	ix.option.Add("legsInVehicle", ix.type.bool, false, {
 		category = "legs"
 	})
 

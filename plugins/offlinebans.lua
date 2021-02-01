@@ -29,6 +29,18 @@ ix.lang.AddTable("english", {
 	cmdCharBanOfflineCharacterLoaded = "%s is loaded on the server."
 })
 
+ix.lang.AddTable("korean", {
+	cmdCharBanOfflineDesc = "서버 내에 불러와지지 않은 캐릭터를 추방합니다.",
+	cmdCharUnbanOfflineDesc = "서버 내에 불러와지지 않은 캐릭터를 금지 해제합니다.",
+	cmdCharUnbanOfflineNotBanned = "%s님은 추방되지 않았습니다!",
+	cmdCharBanOfflineOverloadedResult = "매개 변수와 일치하는 문자가 두 개 이상 있습니다.",
+	cmdCharBanOfflineNoResult = "매개 변수와 일치하는 문자가 없습니다.",
+	cmdCharBanOfflineAlreadyBanned = "%s님은 이미 추방되었습니다!",
+	cmdCharBanOfflineSuccess = "%s님이 %s (%s) 캐릭터를 오프라인 추방했습니다.",
+	cmdCharUnbanOfflineSuccess = "%s님이 %s (%s) 캐릭터를 오프라인 금지 해제했습니다.",
+	cmdCharBanOfflineCharacterLoaded = "%s님이 서버에 불러와졌습니다."
+})
+
 function PLUGIN:IsCharacterLoaded(id)
 	return ix.char.loaded[tonumber(id)]
 end

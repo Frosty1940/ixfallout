@@ -24,7 +24,7 @@ if (SERVER) then
 	end)
 end
 
-ix.command.Add("adminspawnmenu", {
+ix.command.Add("AdminSpawnMenu", {
     adminOnly = true,
 	OnRun = function(self, client)
 		net.Start("adminSpawnMenu")

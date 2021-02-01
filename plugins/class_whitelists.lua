@@ -30,6 +30,13 @@ ix.lang.AddTable("english", {
 	unclasswhitelist = "%s has unwhitelisted %s from the %s class."
 })
 
+ix.lang.AddTable("korean", {
+	cmdPlyUnClassWhitelist = "특정 대상을 세력 내의 특정 클래스로 변경할 수 없도록 합니다.",
+	cmdPlyClassWhitelist = "특정 대상을 세력 내의 특정 클래스로 변경할 수 있도록 합니다.",
+	classwhitelist = "%s님이 %s님을 %s 클래스에 들어가도록 허가했습니다.",
+	unclasswhitelist = "%%s님이 %s님을 %s 클래스에 들어가는 것을 금지했습니다."
+})
+
 local playerMeta = FindMetaTable("Player")
 
 function playerMeta:HasClassWhitelist(class)
