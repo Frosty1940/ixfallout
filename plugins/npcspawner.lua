@@ -104,7 +104,7 @@ if SERVER then
 		data.mins = Vector(-16, -16, 0)
 		data.maxs = Vector(16, 16, 16)
 
-		local idat = table.Random(self.spawngroups[v[2]]) or self.spawngroup["default"]
+		local idat = table.Random(self.spawngroups[v[2]]) or table.Random(self.spawngroup["default"])
 
 		--nut.item.spawn(idat, v[1] + Vector( math.Rand(-8,8), math.Rand(-8,8), 20 ), nil, AngleRand())
 			
@@ -156,7 +156,7 @@ else
 
 end
 
-ix.command.Add("npcspawnadd", {
+ix.command.Add("NPCSpawnAdd", {
 	adminOnly = true,
 	syntax = "<string npcgroup>",
 	arguments = {ix.type.text},
@@ -169,7 +169,7 @@ ix.command.Add("npcspawnadd", {
 	end 
 })
 
-ix.command.Add("npcspawnremove", {
+ix.command.Add("NPCSpawnRemove", {
 	adminOnly = true,
 	OnRun = function(self, client, arguments)
 		local trace = client:GetEyeTraceNoCursor()
