@@ -26,7 +26,7 @@ if SERVER then
         local items = inv:GetItems()
         local lck = char:GetAttribute("lck", 0)
         local lckMult = ix.config.Get("luckMultiplier", 1)
-        local stm = char:GetAttribeute("stm", 0)
+        local stm = char:GetAttribute("stm", 0)
 
         if char then
             if resFactions[char:GetFaction()] then return end
