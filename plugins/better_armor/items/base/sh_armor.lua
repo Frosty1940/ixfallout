@@ -78,6 +78,7 @@ function ITEM:RemoveOutfit(client)
 		if (character:GetData("oldSkin" .. self.outfitCategory)) then
 			client:SetSkin(character:GetData("oldSkin" .. self.outfitCategory))
 			character:SetData("oldSkin" .. self.outfitCategory, nil)
+			character:SetData("skin", client:GetSkin())
 		else
 			client:SetSkin(0)
 		end
@@ -89,13 +90,23 @@ function ITEM:RemoveOutfit(client)
 		if (index > -1) then
 			client:SetBodygroup(index, 0)
 
-			local groups = character:GetData("groups" .. self.outfitCategory, {})
+			local groups = character:GetData("groups", {})
 
 			if (groups[index]) then
 				groups[index] = nil
-				character:SetData("groups" .. self.outfitCategory, groups)
+				character:SetData("groups", groups)
 			end
 		end
+	end
+
+	-- restore the original bodygroups
+	if (character:GetData("oldGroups" .. self.outfitCategory)) then
+		for k, v in pairs(character:GetData("oldGroups" .. self.outfitCategory, {})) do
+			client:SetBodygroup(k, v)
+		end
+
+		character:SetData("groups", character:GetData("oldGroups" .. self.outfitCategory, {}))
+		character:GetData("oldGroups" .. self.outfitCategory, nil)
 	end
 
 	if (self.attribBoosts) then
@@ -235,6 +246,8 @@ ITEM.functions.Equip = {
 
 			if (item.newSkin) then
 				char:SetData("oldSkin" .. item.outfitCategory, item.player:GetSkin())
+				char:SetData("skin", item.newSkin)
+
 				item.player:SetSkin(item.newSkin)
 			end
 
@@ -276,6 +289,7 @@ ITEM.functions.Equip = {
 	OnCanRun = function(item)
 		local client = item.player
 
+		if item.allowedModels and !table.HasValue(item.allowedModels, item.player:GetModel()) then return false end
 		return !IsValid(item.entity) and IsValid(client) and item:GetData("equip") != true and item:CanEquipOutfit() and
 			hook.Run("CanPlayerEquipItem", client, item) != false and item.invID == client:GetCharacter():GetInventory():GetID()
 	end
@@ -296,7 +310,7 @@ ITEM.functions.Repair = {
 		for k, v in pairs(items) do
 			if (v.uniqueID == "repair_tools") then
 				item:SetData("Durability", math.min(item:GetData("Durability") + item:GetRepairAmount(client), item.maxDurability))
-				character:SetAttrib("int", int + 0.2)
+				character:SetAttrib("int", math.min(int + 0.2, 100))
 				client:EmitSound(randomsound)
 				v:Remove()
 				

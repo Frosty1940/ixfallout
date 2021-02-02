@@ -6,6 +6,9 @@ ITEM.width = 1
 ITEM.height = 1
 ITEM.healthPoint = 0
 ITEM.medAttr = 0
+ITEM.bleeding = false
+ITEM.fracture = true
+ITEM.fractureChance = 30
 
 function ITEM:GetDescription()
 	return (L(self.description) .. L("itemMedkitDesc01") .. self.medAttr .. L("itemMedkitDesc02") .. self.healthPoint)
@@ -17,11 +20,23 @@ ITEM.functions.selfheal = {
 		local client = itemTable.player
 		local character = client:GetCharacter()
 		local int = character:GetAttribute("int", 0)
+		local lck = character:GetAttribute("lck", 0)
+		local lckMult = ix.config.Get("luckMultiplier", 1)
 		if int >= itemTable.medAttr then
 			client:SetNWBool("Bleeding",false)
 			client:SetNetworkedFloat("NextBandageuse", 2 + CurTime())
 			client:SetHealth(math.min(client:Health() + itemTable.healthPoint + int, client:GetMaxHealth()))
-			character:SetAttrib("int", int + 0.2)
+
+			if itemTable.bleeding then
+				ix.Wounds:RemoveBleeding(client)
+			end
+
+			if itemTable.fracture then
+				local chance = itemTable.fractureChance + int + lck * lckMult
+				if (math.random(100) < itemTable.fractureChance + int + lck * lckMult) then
+					ix.Wounds:RemoveFracture(client)
+				end
+			end
 		else
 			client:NotifyLocalized("lackKnowledge")
 			return false
@@ -34,6 +49,8 @@ ITEM.functions.heal = {
 		local client = itemTable.player
 		local character = client:GetCharacter()
 		local int = character:GetAttribute("int", 0)
+		local lck = character:GetAttribute("lck", 0)
+		local lckMult = ix.config.Get("luckMultiplier", 1)
 		local data = {}
 			data.start = client:GetShootPos()
 			data.endpos = data.start + client:GetAimVector() * 96
@@ -47,7 +64,17 @@ ITEM.functions.heal = {
 				entity:SetNWBool("Bleeding",false)
 				entity:SetNetworkedFloat("NextBandageuse", 2 + CurTime())
 				entity:SetHealth(math.min(client:Health() + itemTable.healthPoint + int, entity:GetMaxHealth()))
-				character:SetAttrib("int", int + 0.2)
+
+				if itemTable.bleeding then
+					ix.Wounds:RemoveBleeding(entity)
+				end
+
+				if itemTable.fracture then
+					local chance = itemTable.fractureChance + int + lck * lckMult
+					if (math.random(100) < itemTable.fractureChance + int + lck * lckMult) then
+						ix.Wounds:RemoveFracture(entity)
+					end
+				end
 			else
 				client:NotifyLocalized("lackKnowledge")
 				return false

@@ -4,6 +4,9 @@ ITEM.model = "models/props_lab/box01a.mdl"
 ITEM.price = 20
 ITEM.healthPoint = 15 -- Health point that the player will get
 ITEM.medAttr = 0 -- How much medical attribute the character needs
+ITEM.bleeding = true
+ITEM.fracture = true
+ITEM.fractureChance = 15
 
 ITEM:Hook("selfheal", function(item)
 	local client = item.player
