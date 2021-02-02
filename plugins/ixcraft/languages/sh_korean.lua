@@ -23,6 +23,10 @@ LANGUAGE = {
 	stationWeaponsWorkbenchDesc = "무기 개조를 위한 작업대입니다.",
 	stationWorkbenchDesc = "제작을 위한 작업대입니다.",
 
+	["Ammunition"] = "탄약",
+	["Food"] = "음식",
+	["Scrap"] = "폐품",
+
 	["Bandage"] = "붕대",
 	recipeBandageDesc = "전쟁 전 화폐로 붕대를 만듭니다.",
 	["Brahmin steak"] = "브라민 스테이크",
@@ -93,7 +97,11 @@ LANGUAGE = {
 	["Vim Refresh"] = "빔 리프레시",
 	recipeVimRefreshDesc = "빔 리프레시를 양조합니다.",
 	["Boiled water"] = "끓인 물",
-	recipeWaterDesc = "더러운 물을 끓입니다.",
+	recipeBoiledWaterDesc = "더러운 물을 끓입니다.",
 	["YumYum Deviled Eggs"] = "얌얌 데블드 에그",
 	recipeYumYumDeviledEggsDesc = "오염된 얌얌 데블드 에그를 정화합니다.",
+	["Purified water"] = "정제된 물",
+	recipeWaterDesc = "더러운 물을 정제합니다.",
+	["Scrap metal"] = "금속 부품",
+	recipeMetalDesc = "금속 부품을 분해합니다.",
 }
