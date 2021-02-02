@@ -19,7 +19,7 @@ ix.config.Add("strengthMultiplier", 1, "The strength multiplier for carrying obj
 	category = "Attributes"
 })
 
-ix.config.Add("enduranceMultiplier", 0.2, "Mutiplies the health that endurance adds to characters.", nil, {
+ix.config.Add("enduranceMultiplier", 0.7, "Mutiplies the health that endurance adds to characters.", nil, {
 	data = {min = 0, max = 10.0, decimals = 1},
 	category = "Attributes"
 })
@@ -202,7 +202,7 @@ if (SERVER) then
 	function playerMeta:RestoreStamina(amount)
 		local current = self:GetLocalVar("stm", 0)
 		local endurance = self:GetCharacter():GetAttribute("end", 0)
-		local enduranceMult = ix.config.Get("enduranceMultiplier", 0.2)
+		local enduranceMult = ix.config.Get("enduranceMultiplier", 0.7)
 		local value = math.Clamp(current + amount + (endurance * enduranceMult), 0, 100)
 
 		self:SetLocalVar("stm", value)
@@ -211,8 +211,8 @@ if (SERVER) then
 	function playerMeta:ConsumeStamina(amount)
 		local current = self:GetLocalVar("stm", 0)
 		local endurance = self:GetCharacter():GetAttribute("end", 0)
-		local enduranceMult = ix.config.Get("enduranceMultiplier", 0.2)
-		local value = math.Clamp(current - amount - (endurance * enduranceMult), 0, 100)
+		local enduranceMult = ix.config.Get("enduranceMultiplier", 0.7)
+		local value = math.Clamp(current - math.max(amount - (endurance * enduranceMult), 1), 0, 100)
 
 		self:SetLocalVar("stm", value)
 	end
