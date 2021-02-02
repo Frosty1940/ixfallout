@@ -66,22 +66,27 @@ function PLUGIN:KeyPress(client, key)
 		if (key == IN_ATTACK) then
 			local weapon = client:GetActiveWeapon()
 			
-			if (weapon and weapon:Clip1() and weapon:GetNextPrimaryFire() <= CurTime()) then
-				if (client:IsPlayer()) then
-					local character = client:GetCharacter()
-					local inventory = character:GetInventory()
-					local items = inventory:GetItems()
-					
-					for k, v in pairs(items) do
-						if (v:GetData("equip")) then
-							if (v.base == "base_weapons" and v.class == weapon:GetClass()) then
-								local durability = v:GetData("Durability", 100)
-								
-								if (durability > 0) then
-									v:SetData("Durability", math.max(durability - math.random(1, 5)))
-								elseif (durability == 0 or durability < 0) then
-									v:Unequip(client)
-									v:SetData("Durability", 0)
+			if (weapon) then
+				if (!weapon:Clip1()) then return end
+				if (weapon:Clip1() < 0) then return end
+
+				if (weapon:Clip1() and weapon:GetNextPrimaryFire() <= CurTime()) then
+					if (client:IsPlayer()) then
+						local character = client:GetCharacter()
+						local inventory = character:GetInventory()
+						local items = inventory:GetItems()
+						
+						for k, v in pairs(items) do
+							if (v:GetData("equip")) then
+								if (v.base == "base_weapons" and v.class == weapon:GetClass()) then
+									local durability = v:GetData("Durability", 100)
+									
+									if (durability > 0) then
+										v:SetData("Durability", math.max(durability - math.random(1, 2)))
+									elseif (durability == 0 or durability < 0) then
+										v:Unequip(client)
+										v:SetData("Durability", 0)
+									end
 								end
 							end
 						end

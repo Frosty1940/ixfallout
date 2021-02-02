@@ -201,7 +201,18 @@ if (SERVER) then
 
 	function playerMeta:RestoreStamina(amount)
 		local current = self:GetLocalVar("stm", 0)
-		local value = math.Clamp(current + amount, 0, 100)
+		local endurance = self:GetCharacter():GetAttribute("end", 0)
+		local enduranceMult = ix.config.Get("enduranceMultiplier", 0.2)
+		local value = math.Clamp(current + amount + (endurance * enduranceMult), 0, 100)
+
+		self:SetLocalVar("stm", value)
+	end
+
+	function playerMeta:ConsumeStamina(amount)
+		local current = self:GetLocalVar("stm", 0)
+		local endurance = self:GetCharacter():GetAttribute("end", 0)
+		local enduranceMult = ix.config.Get("enduranceMultiplier", 0.2)
+		local value = math.Clamp(current - amount - (endurance * enduranceMult), 0, 100)
 
 		self:SetLocalVar("stm", value)
 	end

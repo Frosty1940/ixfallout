@@ -175,32 +175,41 @@ else
 					if (client:Alive() and char) then
 						if (client:IsPlayer()) then
 							local inventory = char:GetInventory()
-							local items = inventory:GetItems()
+							local items = inventory:GetItemsByBase("base_armor")
+							local geigerSounds = {"player/geiger1.wav", "player/geiger2.wav", "player/geiger3.wav" }
+							local randomsound = table.Random(geigerSounds)
 
 							for k, v in pairs(items) do
-								if (v:GetData("equip") == true and v.base == "base_armor") then
+								if (v:GetData("equip", true)) then
 									local durability = v:GetData("Durability", 100)
+									local tick = 0
 
 									if (durability > 0) then
-										v:SetData("Durability", math.max(durability - 0.005))
+										tick = tick +1
+
+										if (tick >= 5) then
+											v:SetData("Durability", math.max(durability - 1))
+											tick = 0
+										end
 									elseif (durability == 0 or durability < 0) then
+										tick = 0
 										client:RemoveOutfit(v)
 										v:SetData("Durability", 0)
 									end
 
-									client:AddRadiation(math.random(0, v.damage[5]/500))
+									client:AddRadiation(math.random(0, 1 - v.damage[5]))
+									client:EmitSound(randomsound)
 									-- client:ScreenFade(1, ColorAlpha(color_white, 10), .5, 0)
+									print(client:GetRadiation())
+									break
 								else
-									client:AddRadiation(math.random(0, 0.01))
+									client:AddRadiation(math.random(0, 1))
 									client:ScreenFade(1, ColorAlpha(color_white, 30), .5, 0)
+									client:EmitSound(randomsound)
+									break
 								end
 							end
 						end
-						
-						local geigerSounds = {"player/geiger1.wav", "player/geiger2.wav", "player/geiger3.wav" }
-						local randomsound = table.Random(geigerSounds)
-						
-						client:EmitSound(randomsound)
 					end
 				end
 			end
