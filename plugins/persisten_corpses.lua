@@ -55,6 +55,11 @@ ix.config.Add("dropMoneyOnDeath", true, "Whether or not to drop money on death."
 	category = "Persistent Corpses"
 })
 
+ix.config.Add("dropMoneyOnDeathCap", 10, "How much money at least to drop money on death.", nil, {
+	data = {min = 10, max = 9999},
+	category = "Persistent Corpses"
+})
+
 do
 	ix.lang.AddTable("english", {
 		itemLost = "You've lost item %s.",
@@ -239,7 +244,11 @@ if (SERVER) then
 		end
 		
 		if (ix.config.Get("dropMoneyOnDeath", false) and !client:IsAdmin()) then
-			local amount = math.random(client:GetCharacter():GetMoney()/2)
+			local money = client:GetCharacter():GetMoney()
+
+			if (money < ix.config.Get("dropMoneyOnDeathCap", 10)) then return end
+
+			local amount = math.random(money/2)
 			
 			if (amout > 0) then
 				client:GetCharacter():TakeMoney(amount)
