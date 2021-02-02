@@ -55,8 +55,8 @@ ix.config.Add("dropMoneyOnDeath", true, "Whether or not to drop money on death."
 	category = "Persistent Corpses"
 })
 
-ix.config.Add("dropMoneyOnDeathCap", 10, "How much money at least to drop money on death.", nil, {
-	data = {min = 10, max = 9999},
+ix.config.Add("dropMoneyOnDeathCap", 100, "How much money at least to drop money on death.", nil, {
+	data = {min = 2, max = 9999},
 	category = "Persistent Corpses"
 })
 
