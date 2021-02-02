@@ -4,7 +4,7 @@ RECIPE.description = "recipeBandageDesc"
 RECIPE.category = "Medical"
 RECIPE.model = "models/props_lab/box01a.mdl"
 RECIPE.requirements = {
-	["money"] = 2
+	["cloth"] = 1
 }
 RECIPE.results = {
 	["bandage"] = 1

@@ -28,7 +28,7 @@ LANGUAGE = {
 	["Scrap"] = "폐품",
 
 	["Bandage"] = "붕대",
-	recipeBandageDesc = "전쟁 전 화폐로 붕대를 만듭니다.",
+	recipeBandageDesc = "천으로 붕대를 만듭니다.",
 	["Brahmin steak"] = "브라민 스테이크",
 	recipeBrahminSteakDesc = "브라민 스테이크를 조리합니다.",
 	["Caravan lunch"] = "행상 도시락",
@@ -104,4 +104,6 @@ LANGUAGE = {
 	recipeWaterDesc = "더러운 물을 정제합니다.",
 	["Scrap metal"] = "금속 부품",
 	recipeMetalDesc = "금속 부품을 분해합니다.",
+	["Pre-war money"] = "전쟁 전 화폐",
+	recipeMoneyDesc = "전쟁 전 화폐를 분해합니다.",
 }
