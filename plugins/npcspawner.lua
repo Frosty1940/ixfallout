@@ -104,7 +104,7 @@ if SERVER then
 		data.mins = Vector(-16, -16, 0)
 		data.maxs = Vector(16, 16, 16)
 
-		local idat = table.Random(self.spawngroups[v[2]]) or table.Random(self.spawngroup["default"])
+		local idat = table.Random(self.spawngroups[v[2] or "default"])
 
 		--nut.item.spawn(idat, v[1] + Vector( math.Rand(-8,8), math.Rand(-8,8), 20 ), nil, AngleRand())
 			
