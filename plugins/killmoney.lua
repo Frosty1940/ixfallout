@@ -2,12 +2,12 @@ PLUGIN.name = "Money Kill"
 PLUGIN.author = "Stan, Frosty"
 PLUGIN.description = "Allows the player to earn money from killing NPCs and players"
 
-ix.config.Add("NPCKillAmount", 10, "How much money a player gets for killing an NPC", nil, {
+ix.config.Add("NPCKillAmount", 5, "How much money a player gets for killing an NPC", nil, {
 	data = {min = 0, max = 1000},
 	category = "moneykill"
 })
 
-ix.config.Add("PlayerKillAmount", 5, "How much money a player gets for killing a player.", nil, {
+ix.config.Add("PlayerKillAmount", 3, "How much money a player gets for killing a player.", nil, {
     data = {min = 0, max = 1000},
     category = "moneykill"
 })
