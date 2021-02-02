@@ -12,7 +12,6 @@ ITEM.functions.Dose = {
 		local int = character:GetAttribute("int", 0)
 		
 		client:EmitSound("ui/eating_mentats.wav")
-		character:SetAttrib("int", int + 0.2)
 		
 		for i = 1, 120 + int do
 			timer.Simple( 1 + i, function()

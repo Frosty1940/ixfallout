@@ -42,7 +42,8 @@ function PLUGIN:Drunk(client)
 	end
 	
 	if strength then
-		client:GetCharacter():SetAttrib("str", strength + 3)
+		-- client:GetCharacter():SetAttrib("str", strength + 3)
+		client:GetCharacter():AddBoost("drunk", "str", 3)
 	end
 	
 	client:SetLocalVar("drunk", client:GetLocalVar("drunk") + client:GetCharacter():GetData("drunk"))
@@ -57,7 +58,8 @@ function PLUGIN:Drunk(client)
 		client:GetCharacter():SetData("drunk", client:GetLocalVar("drunk"))
 		if client:GetCharacter():GetData("drunk") == 0 then
 			if strength then
-				client:GetCharacter():SetAttrib("str", strength)
+				-- client:GetCharacter():SetAttrib("str", strength)
+				client:GetCharacter():RemoveBoost("drink", "str")
 			end
 			
 			timer.Remove("drunk")

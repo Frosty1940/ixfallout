@@ -13,7 +13,7 @@ ITEM.functions.Dose = {
 		local endurance = character:GetAttribute("end", 0)
 		
 		client:EmitSound("ui/stim.wav")
-		character:SetAttrib("end", endurance + 0.2)
+		character:AddBoost("medx", "end", 1 + int * intMult)
 		
 		if armor > 15 then
 			client:SetArmor(math.Clamp(armor, 0, 225))
@@ -36,7 +36,7 @@ ITEM.functions.Dose = {
 		timer.Simple( 41, function()
 			if client and character and client:Alive() then
 				client:SetArmor(armor)
-				character:SetAttrib("end", endurance)
+				character:RemoveBoost("medx", "end")
 				client:EmitSound("ui/addicteds.wav")
 				client:NotifyLocalized("itemMedXEffectsEnded")
 			end

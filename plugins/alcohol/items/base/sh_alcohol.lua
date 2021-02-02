@@ -37,22 +37,26 @@ ITEM.functions.Drink = {
 		end
 
 		if str then
-			char:SetAttrib("str", math.max(0, str + 1))
+			--char:SetAttrib("str", math.max(0, str + 1))
+			char:AddBoost("drink", "str", 1)
 
 			timer.Simple(120, function()
 				str = char:GetAttribute("str", 0)
 
-				client:GetCharacter():SetAttrib("str", math.max(0, str - 1))
+				-- client:GetCharacter():SetAttrib("str", math.max(0, str - 1))
+				char:RemoveBoost("drink", "str")
 			end)
 		end
 
 		if int then
-			char:SetAttrib("int", math.max(0, int - 1))
+			--char:SetAttrib("int", math.max(0, int - 1))
+			char:AddBoost("drink", "int", -1)
 
 			timer.Simple(120, function()
 				int = char:GetAttribute("int", 0)
 
-				client:GetCharacter():SetAttrib("int", math.max(0, int + 1))
+				--client:GetCharacter():SetAttrib("int", math.max(0, int + 1))
+				char:RemoveBoost("drink", "int")
 			end)
 		end
 	end
