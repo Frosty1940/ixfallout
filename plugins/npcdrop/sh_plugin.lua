@@ -53,6 +53,8 @@ function PLUGIN:OnNPCKilled(entity, client)
 	
 	local rnd = math.random(1, 100)
 
+	if (!client:IsPlayer()) then return end
+
 	if client:GetCharacter() then
 		local luck = client:GetCharacter():GetAttribute("lck", 0)
 		local luckMult = ix.config.Get("luckMultiplier", 1)
