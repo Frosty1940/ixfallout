@@ -35,6 +35,7 @@ LANGUAGE = {
 	recipeCaravanLunchDesc = "행상 도시락을 만듭니다.",
 	["Cram"] = "크램",
 	recipeCramDesc = "오염된 크램을 정화합니다.",
+	recipeCramMadeDesc = "고기 통조림을 만듭니다.",
 	["Dandy Boy Apples"] = "댄디 보이 애플",
 	recipeDandyBoyApplesDesc = "오염된 댄디 보이 애플을 정화합니다.",
 	["Deathclaw egg omelette"] = "데스클로 알 오믈렛",
