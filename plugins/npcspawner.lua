@@ -67,6 +67,9 @@ PLUGIN.spawngroups = {
 	},
 	["army"] = {
 		"npc_mrgutsy_army",
+	},
+	["brahmin"] = {
+		"vj_fallout_brahmin",
 	}
 }
 
@@ -103,10 +106,6 @@ if SERVER then
 		data.filter = client
 		data.mins = Vector(-16, -16, 0)
 		data.maxs = Vector(16, 16, 16)
-
-		if (!IsValid(v[2])) then
-			return
-		end
 
 		local idat = table.Random(self.spawngroups[v[2]]) or self.spawngroup["default"]
 
