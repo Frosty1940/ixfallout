@@ -7,7 +7,7 @@ RECIPE.requirements = {
 	["metal"] = 1,
 }
 RECIPE.results = {
-	["steel"] = 1
+	["steel"] = 1,
 	["aluminium"] = 1
 }
 

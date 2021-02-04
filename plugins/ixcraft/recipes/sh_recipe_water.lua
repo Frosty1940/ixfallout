@@ -5,7 +5,7 @@ RECIPE.category = "Food"
 RECIPE.model = "models/mosi/fallout4/props/drink/water.mdl"
 RECIPE.requirements = {
 	["boiledwater"] = 5,
-	["steel"] = 1
+	["steel"] = 1,
 	["aluminium"] = 1
 }
 RECIPE.results = {
