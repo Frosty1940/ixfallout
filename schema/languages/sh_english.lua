@@ -32,6 +32,8 @@ LANGUAGE = {
 	beingUntied = "They are being untied.",
 	restrictedClass = "You cannot change classes when you are restrained!",
 	-- Items
+	eqbagDesc = "A bag that allows you to use extra inventory of a certain size to hold or use other items.\n\n Bag inventory size: %sx%s",
+	eqbagDescEntity = "A bag with an inventory of %sx%s",
 	itemBOSHolotagDesc = "Every member of the Brotherhood of Steel, just like the soldiers of the U.S. Army that they are descended from, wears a set of two holotags around their neck. They contain essential information about the wearer so that their corpse can be identified.",
 	holotagRead = "Face sheet of this holotag contain the following info: %s, %s",
 	holotagSet = "You've set the info of this holotag: %s, %s",
@@ -106,7 +108,6 @@ LANGUAGE = {
 	itemElectronChargePackDesc = "A small electron batteries are used as ammunition by several energy weapons. It is charged with a %s fireable amount by Gatling Laser.",
 	itemEnergyCellDesc = "A small, self-contained energy storage unit often associated with one-handed energy weapons and acts essentially as a very powerful battery or capacitor. It is charged with a %s fireable amount by AEP7 laser pistol.",
 	itemMicrofusionCellDesc = "A small energy-production units roughly the size of the palm. Each cell is a self-contained fusion plant, complete with its own fusion reactor. It is charged with a %s fireable amount by AER9 laser rifle.",
-	itemBagDesc = "It makes possible to store more items in the inventory.",
 	itemBaseDurabilityDesc = "\n \n Durability: ",
 	itemNCRRangerCasualDesc = "An outfit with brown pants and a tan long-sleeve button-up shirt.\nFemale ghoul / Black / Asian characters can't equip this armor.",
 	itemGunsAndBulletsDesc = "Reading this book permanently improves the intelligence of the player character by one point.",
