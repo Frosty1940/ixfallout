@@ -1,14 +1,17 @@
 
-RECIPE.name = "Service rifle"
-RECIPE.description = "recipeServiceRifleDesc"
-RECIPE.category = "Weapon"
-RECIPE.model = "models/halokiller38/fallout/weapons/assaultrifles/battlerifle.mdl"
+RECIPE.name = "T-45d power armor"
+RECIPE.description = "recipeT45DPowerArmorDesc"
+RECIPE.category = "Armor"
+RECIPE.model = "models/fallout_3/power_armor.mdl"
 RECIPE.requirements = {
-	["servicerifle_bayonet"] = 1
+	["steel"] = 15,
+	["glass"] = 1,
+	["plastic"] = 3,
+	["leather"] = 2,
+	["fusioncore"] = 1
 }
 RECIPE.results = {
-	["servicerifle"] = 1,
-	["combatknife"] = 1
+	["t45d_power_armor"] = 1
 }
 
 RECIPE:PostHook("OnCanCraft", function(recipeTable, client)

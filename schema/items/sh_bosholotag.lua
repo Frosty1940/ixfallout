@@ -1,6 +1,6 @@
 
 ITEM.name = "Brotherhood of Steel holotag"
-ITEM.model = "models/gibs/metal_gib4.mdl"
+ITEM.model = "models/mosi/fallout4/props/junk/holotag.mdl"
 ITEM.description = "itemBOSHolotagDesc"
 ITEM.price = 1
 

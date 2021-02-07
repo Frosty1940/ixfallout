@@ -34,7 +34,7 @@ FACTION.models = {
 function FACTION:OnCharacterCreated(client, character)
 	local inventory = character:GetInventory()
 	
-	inventory:Add("sunsetsarsaparilla", 2)
+	inventory:Add("boiledwater", 2)
 	inventory:Add("bandage", 1)
 
 	if character:GetAttribute("luck", 0) then

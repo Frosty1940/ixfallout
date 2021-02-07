@@ -1,7 +1,7 @@
 
 RECIPE.name = "Service rifle (bayonet)"
 RECIPE.description = "recipeServiceRifleBayonetDesc"
-RECIPE.category = "Weapons"
+RECIPE.category = "Weapon"
 RECIPE.model = "models/halokiller38/fallout/weapons/assaultrifles/battleriflebayo.mdl"
 RECIPE.requirements = {
 	["servicerifle"] = 1,

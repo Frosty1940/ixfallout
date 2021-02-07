@@ -1,14 +1,13 @@
 
-RECIPE.name = "Service rifle"
-RECIPE.description = "recipeServiceRifleDesc"
-RECIPE.category = "Weapon"
-RECIPE.model = "models/halokiller38/fallout/weapons/assaultrifles/battlerifle.mdl"
+RECIPE.name = "Metal armor"
+RECIPE.description = "recipeMetalArmorDesc"
+RECIPE.category = "Armor"
+RECIPE.model = "models/player/neutral/hub/metalarmour_mk1_male_01.mdl"
 RECIPE.requirements = {
-	["servicerifle_bayonet"] = 1
+	["steel"] = 10
 }
 RECIPE.results = {
-	["servicerifle"] = 1,
-	["combatknife"] = 1
+	["metal_armor"] = 1
 }
 
 RECIPE:PostHook("OnCanCraft", function(recipeTable, client)

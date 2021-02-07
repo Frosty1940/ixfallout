@@ -27,7 +27,7 @@ function PLUGIN:OnNPCKilled(entity, client)
 	local IrradiatedPreWarFoods = {"cram_irradiated", "dandyboyapples_irradiated", "fancyladcakes_irradiated", "instamash_irradiated", "macandcheese_irradiated", "porkbeans_irradiated", "potatocrisps_irradiated", "sugarbombs_irradiated"}
 	local IrradiatedPreWarFoodsItems = table.Random(IrradiatedPreWarFoods)
 	
-	local Gutsy = {"energycell", "microfusioncell"}
+	local Gutsy = {"microfusioncell", "metal", "aluminium", "steel"}
 	local GutsyItems = table.Random(Gutsy)
 
 	local Radroach = {"radroachmeat"}
@@ -50,6 +50,9 @@ function PLUGIN:OnNPCKilled(entity, client)
 
 	local YaoGui = {"yaoguimeat", "leather"}
 	local YaoGuiItems = table.Random(YaoGui)
+
+	local Junks = {"bucket", "cafeteriatray", "camera", "cigarettecarton", "cigarettepack", "cleaner", "coffeecup", "coffeepot", "ducttape", "fissionbattery", "fryingpan", "gascan", "hotplate", "holotape", "lunchbox", "metal", "nukacola_bottle", "pan", "phone", "pressurecooker", "prewarbook", "repair_tools", "sensormodule", "tincan", "turpentine", "wonderglue"}
+	local JunksItems = table.Random(Junks)
 	
 	local rnd = math.random(1, 100)
 
@@ -101,18 +104,18 @@ function PLUGIN:OnNPCKilled(entity, client)
 		ix.item.Spawn(DeathclawItems, entity:GetPos() + Vector(0, 0, 16))
 		ix.item.Spawn("deathclawegg", entity:GetPos() + Vector(0, 0, 16))
 	elseif (class == "npc_ghoulferal" or class == "npc_ghoulferal_jumpsuit" or class == "npc_ghoulferal_reaver" or class == "npc_ghoulferal_roamer" or class == "npc_ghoulferal_trooper" or class == "npc_ghoulferal_trooper_gl" or class == "npc_ghoulferal_glowingone" or class == "npc_ghoulferal_jumpsuit_gl" or class == "vj_fallout_ghoul") then
-		if (rnd >= 99) then
-			ix.item.Spawn("metal_armor", entity:GetPos() + Vector(0, 0, 16))
-		elseif (rnd >= 60) then
-			ix.item.Spawn(GhoulItems, entity:GetPos() + Vector(0, 0, 16))
+		if (rnd >= 70) then
+			ix.item.Spawn(JunksItems, entity:GetPos() + Vector(0, 0, 16))
 		elseif (rnd >= 50) then
 			ix.item.Spawn(GhoulItems, entity:GetPos() + Vector(0, 0, 16))
 			ix.item.Spawn(IrradiatedPreWarFoodsItems, entity:GetPos() + Vector(0, 0, 16))
 		end
 	elseif (class == "npc_mrgutsy_army" or class == "npc_mrgutsy_brotherhood" or class == "npc_mrgutsy_enclave") then
-		if (rnd >= 30) then
+		if (rnd >= 80) then
 			ix.item.Spawn(GutsyItems, entity:GetPos() + Vector(0, 0, 16))
+		elseif (rnd >= 70) then
 			ix.item.Spawn(GutsyItems, entity:GetPos() + Vector(0, 0, 16))
+		elseif (rnd >= 30) then
 			ix.item.Spawn(GutsyItems, entity:GetPos() + Vector(0, 0, 16))
 		end
 	elseif (class == "vj_fallout_roach") then

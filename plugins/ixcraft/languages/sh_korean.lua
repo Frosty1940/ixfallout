@@ -26,6 +26,9 @@ LANGUAGE = {
 	["Ammunition"] = "탄약",
 	["Food"] = "음식",
 	["Scrap"] = "폐품",
+	["Weapon"] = "무기",
+	["Armor"] = "방어구",
+	["Consumable"] = "소모품",
 
 	["Bandage"] = "붕대",
 	recipeBandageDesc = "천으로 붕대를 만듭니다.",

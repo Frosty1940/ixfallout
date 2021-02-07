@@ -1,14 +1,15 @@
 
-RECIPE.name = "Service rifle"
-RECIPE.description = "recipeServiceRifleDesc"
-RECIPE.category = "Weapon"
-RECIPE.model = "models/halokiller38/fallout/weapons/assaultrifles/battlerifle.mdl"
+RECIPE.name = "Repair kit"
+RECIPE.description = "recipeRepairToolsDesc"
+RECIPE.category = "Consumables"
+RECIPE.model = "models/clutter/toolbox.mdl"
 RECIPE.requirements = {
-	["servicerifle_bayonet"] = 1
+	["steel"] = 2,
+	["aluminium"] = 1,
+	["plastic"] = 1,
 }
 RECIPE.results = {
-	["servicerifle"] = 1,
-	["combatknife"] = 1
+	["repair_tools"] = 1
 }
 
 RECIPE:PostHook("OnCanCraft", function(recipeTable, client)
