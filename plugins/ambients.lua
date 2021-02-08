@@ -8,16 +8,24 @@ ix.lang.AddTable("english", {
 	ambient = "Ambient Sounds",
 	optWindVolume = "Set Wind Volume",
 	optdWindVolume = "Set amount volume of the ambient winds.",
+	optMusicVolume = "Set Music Volume",
+	optdMusicVolume = "Set amount volume of the ambient musics.",
 })
 
 ix.lang.AddTable("korean", {
 	ambient = "환경음",
 	optWindVolume = "바람 소리 세기",
 	optdWindVolume = "바람 환경음의 소리 세기를 조절합니다.",
+	optMusicVolume = "음악 소리 세기",
+	optdMusicVolume = "음악 환경음의 소리 세기를 조절합니다.",
 })
 
 if CLIENT then
-	ix.option.Add("windVolume", ix.type.number, 0.1, {
+	ix.option.Add("windVolume", ix.type.number, 0.03, {
+		category = "ambient", min = 0, max = 1, decimals = 2
+	})
+
+	ix.option.Add("musicVolume", ix.type.number, 1, {
 		category = "ambient", min = 0, max = 1, decimals = 2
 	})
 
@@ -86,10 +94,11 @@ if CLIENT then
 			if !self.sndWind:IsPlaying() then
 				self.sndWind:Play()
 			end
-			self.sndWind:ChangeVolume( ix.option.Get("windVolume", 0.1), 4 )
+			self.sndWind:ChangeVolume( ix.option.Get("windVolume", 0.03), 4 )
 		else
 			if !self.sndAmbients:IsPlaying() then
 				self.sndAmbients:Play()
+				self.sndAmbients:ChangeVolume( ix.option.Get("musicVolume", 1), 4 )
 			end
 			self.sndWind:ChangeVolume( 0, 4 )
 		end
