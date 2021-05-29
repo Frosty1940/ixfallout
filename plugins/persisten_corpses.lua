@@ -243,21 +243,19 @@ if (SERVER) then
 			end
 		end
 		
-		if (ix.config.Get("dropMoneyOnDeath", false) and !client:IsAdmin()) then
-			local money = client:GetCharacter():GetMoney()
-
-			if (money < ix.config.Get("dropMoneyOnDeathCap", 10)) then return end
-
-			local amount = math.random(money/2)
+		if (ix.config.Get("dropMoneyOnDeath", false)) then
+			local char = client:GetCharacter()
+			local lck = char:GetAttribute("lck", 0)
+			local lckMlt = ix.config.Get("luckMultiplier", 1)
+			local amount = math.floor(math.random(char:GetMoney() / ( 2 / ( lck * lckMlt ) ) ))
 			
-			if (amout > 0) then
-				client:GetCharacter():TakeMoney(amount)
+			if (amount > 0) then
+				char:TakeMoney(amount)
 				ix.currency.Spawn(client:GetPos() + Vector( math.Rand(-8,8), math.Rand(-8,8), 5), amount)
 				
-					-- timer.Simple(ix.config.Get("spawnTime", 5) + 1, function()
-						client:NotifyLocalized( "moneyLost", ix.currency.Get(amount) )
-					-- end)
-				--end
+				timer.Simple(ix.config.Get("spawnTime", 5) + 1, function()
+					client:NotifyLocalized( "moneyLost", ix.currency.Get(amount) )
+				end)
 			end
 		end
 	end

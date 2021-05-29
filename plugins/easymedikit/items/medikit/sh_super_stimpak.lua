@@ -5,6 +5,7 @@ ITEM.category = "Medical"
 ITEM.price = 150
 ITEM.healthPoint = 60 -- Health point that the player will get
 ITEM.medAttr = 0 -- How much medical attribute the character needs
+ITEM.bleeding = true
 
 ITEM:Hook("heal", function(item)
 	local client = item.player

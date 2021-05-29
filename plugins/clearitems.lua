@@ -43,7 +43,9 @@ if ( SERVER ) then
 			timer.Simple( 30, function()
 				for _, v in pairs( ents.FindByClass( "*" ) ) do
 					if ix.ClearItems[ v:GetClass() ] then
-						v:Remove()
+						if !v:GetData("cannotTake") then
+							v:Remove()
+						end
 					end
 				end
 

@@ -7,7 +7,6 @@ ITEM.healthPoint = 75 -- Health point that the player will get
 ITEM.medAttr = 10 -- How much medical attribute the character needs
 ITEM.bleeding = true
 ITEM.fracture = true
-ITEM.fractureChance = 100
 
 ITEM:Hook("heal", function(item)
 	local client = item.player
